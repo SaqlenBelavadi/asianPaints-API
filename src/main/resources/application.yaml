@@ -1,10 +1,15 @@
 server: 
   port: 8082
-spring:   servlet:    multipart:      max-file-size: 100MB      max-request-size: 100MB  application:
+spring: 
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+  application:
     name: AsianPaintsEVP
   profiles:
     active:
-    - dev
+    - uat
 
 jwt:
     jjwt:
