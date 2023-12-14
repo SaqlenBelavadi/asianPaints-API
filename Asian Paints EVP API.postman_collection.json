@@ -1,0 +1,2164 @@
+{
+	"info": {
+		"_postman_id": "e3a3b084-f487-46ac-a278-017101e0793c",
+		"name": "Asian Paints EVP API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "24629341"
+	},
+	"item": [
+		{
+			"name": "Activity Feedback",
+			"item": [
+				{
+					"name": "Add Activity Feedback",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJMSzIwMDdAYXNpYW5wYWludHMuY29tIiwicm9sZSI6IlJPTEVfQ0FETUlOIiwiZXhwIjoxNjc3MjA5NjUxLCJpYXQiOjE2NzcyMDc4NTF9.TrIm7JXE7FIknfXw6v7DVdorysHmJoS3Sf3x4qtDa5A_nBSsfb7OK_B7ln9RJIJTPBBeWPhgYwjowyBmBcTbGQ"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"employeeId\": \"994666\",\r\n    \"activityName\": \"Test One\",\r\n    \"rating\": 5,\r\n    \"feedback\": \"Test One vs 994666 \",\r\n    \"location\": \"Vakola\",\r\n    \"themeName\": \"Health & Hygiene\",\r\n    \"tagName\": \"Water Tag test\",\r\n    \"startDate\": \"12/12/2022 10:05:00 AM\",\r\n    \"endDate\": \"12/12/2022 12:05:00 PM\",\r\n    \"mode\": \"Online\",\r\n    \"timeRequired\": \"24 hrs\"\r\n}\r\n\r\n// \"feedbackId\":\"219\" // if its update need to pass the \"feedbackId\"",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://{{hostname}}:{{port}}/api/evp/v1/Activity/Feedback"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Activity Feedback",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJMSzIwMDdAYXNpYW5wYWludHMuY29tIiwicm9sZSI6IlJPTEVfQ0FETUlOIiwiZXhwIjoxNjc3MjI0OTk4LCJpYXQiOjE2NzcyMjMxOTh9.vgb0vH_JMln1hZ2b0kCyFj_h6lsNTbsxJNFt_hN6RWT5qbuR4tM32hacUk-cCsBQ_R8w1YnmaA0_ZPYYXDO0Tw"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{hostname}}:{{port}}/api/evp/v1/Activity/Feedback?activityName=Test One",
+							"protocol": "http",
+							"host": [
+								"{{hostname}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"evp",
+								"v1",
+								"Activity",
+								"Feedback"
+							],
+							"query": [
+								{
+									"key": "activityName",
+									"value": "Test One"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Activity Feedback",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJMSzIwMDdAYXNpYW5wYWludHMuY29tIiwicm9sZSI6IlJPTEVfQ0FETUlOIiwiZXhwIjoxNjc3MTQ3NjA5LCJpYXQiOjE2NzcxNDU4MDl9.qymDxG7NX5yQF1H-mVqWJWRZycw_MW5Bx9BTwZLJWnFAd_1pz9l4hoX4dKZN0O4_z9NbNFbnwV9gC6_9SDaAoQ"
+							}
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"employeeIds\": [\r\n        \"LK2007\",\r\n        \"LK2008\"\r\n    ],\r\n    \"activityName\": \"Activity Test 1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://{{hostname}}:{{port}}/api/evp/v1/Activity/Feedback"
+					},
+					"response": []
+				},
+				{
+					"name": "Upload Activity Feedback To Gallery ",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJMSzIwMDdAYXNpYW5wYWludHMuY29tIiwicm9sZSI6IlJPTEVfQ0FETUlOIiwiZXhwIjoxNjc3MjExNTMyLCJpYXQiOjE2NzcyMDk3MzJ9.Dck2Vn62YSJIsh7R9RcBauCF-OUw_aJXuHDVhn6DCrlL7acDS0ewFW5q49xxUPbWTAQlU9QdfNxwAeA2HrE5xQ"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://{{hostname}}:{{port}}/api/evp/v1/Activity/Feedback/UploadToGallery?Id=251,253,254",
+							"protocol": "http",
+							"host": [
+								"{{hostname}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"evp",
+								"v1",
+								"Activity",
+								"Feedback",
+								"UploadToGallery"
+							],
+							"query": [
+								{
+									"key": "Id",
+									"value": "251,253,254"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Activity Feedback In Gallery Published/Unpublished",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJMSzIwMDdAYXNpYW5wYWludHMuY29tIiwicm9sZSI6IlJPTEVfQ0FETUlOIiwiZXhwIjoxNjc3MjE3MjIxLCJpYXQiOjE2NzcyMTU0MjF9.9OU75Y-ndcTet1PXh6sFgZNnN-_1S5npzRua5gPWIt4mg3xOEsNyp9W8D07fI2PQrXNGITRR_E0udhYPsC3QMQ"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{hostname}}:{{port}}/api/evp/v1/Activity/Feedback/Gallery?searchCriteria=startDate=01/02/2023:endDate=28/02/2023:tagName=Water Tag test,tag 11,Tag 3,Tag 4,Tag1,Tag2:activityName=Test activity new,testedit,Test Activity Upload,Test One,Test for past video,Test Activity For Desc,Test Activity 8,Activity Test 1,Activity Test 3,Activity Test 4,Test Activty 39,Test Activty 40,Test email Activty,Test email Activty 2,Test email Activty 3,Test email Activty 4,Test email Activty 5,Test email Activty 6,Test email Activty 7,Test email Activty 8,Test email Activty 9,Test email Activty 10,Test email Activty 11,Test Activty 9,Test Activty 13,Test Activty 14,Test email Activty 12,Test email Activty 14,Test email Activty 15,Test Activty 50,Activity Test 2:location=Kasna:themeName=Health %26 Hygiene,Water,Disaster Relief,Others:modeOfParticipation=Online,On-site",
+							"protocol": "http",
+							"host": [
+								"{{hostname}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"evp",
+								"v1",
+								"Activity",
+								"Feedback",
+								"Gallery"
+							],
+							"query": [
+								{
+									"key": "searchCriteria",
+									"value": "startDate=01/02/2023:endDate=28/02/2023:tagName=Water Tag test,tag 11,Tag 3,Tag 4,Tag1,Tag2:activityName=Test activity new,testedit,Test Activity Upload,Test One,Test for past video,Test Activity For Desc,Test Activity 8,Activity Test 1,Activity Test 3,Activity Test 4,Test Activty 39,Test Activty 40,Test email Activty,Test email Activty 2,Test email Activty 3,Test email Activty 4,Test email Activty 5,Test email Activty 6,Test email Activty 7,Test email Activty 8,Test email Activty 9,Test email Activty 10,Test email Activty 11,Test Activty 9,Test Activty 13,Test Activty 14,Test email Activty 12,Test email Activty 14,Test email Activty 15,Test Activty 50,Activity Test 2:location=Kasna:themeName=Health & Hygiene,Water,Disaster Relief,Others:modeOfParticipation=Online,On-site"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Activity Feedback In Gallery ",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJMSzIwMDdAYXNpYW5wYWludHMuY29tIiwicm9sZSI6IlJPTEVfQ0FETUlOIiwiZXhwIjoxNjc3MjE4OTc2LCJpYXQiOjE2NzcyMTcxNzZ9.NB_ogYq7vAQMm9aS96G4wyfPro-Eq3iC0_cql-at1uxhDJmSUuzfWn7cX1qQEGPaIKbcvUymkdoRxOIeYYGk5Q"
+							}
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://{{hostname}}:{{port}}/api/evp/v1/Activity/Feedback/Gallery?Id=251,252",
+							"protocol": "http",
+							"host": [
+								"{{hostname}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"evp",
+								"v1",
+								"Activity",
+								"Feedback",
+								"Gallery"
+							],
+							"query": [
+								{
+									"key": "Id",
+									"value": "251,252"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Activity Promotion",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJMSzIwMDdAYXNpYW5wYWludHMuY29tIiwicm9sZSI6IlJPTEVfQ0FETUlOIiwiZXhwIjoxNjc3MjA5NjUxLCJpYXQiOjE2NzcyMDc4NTF9.TrIm7JXE7FIknfXw6v7DVdorysHmJoS3Sf3x4qtDa5A_nBSsfb7OK_B7ln9RJIJTPBBeWPhgYwjowyBmBcTbGQ"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"startDate\": \"12/12/2022 10:05:00 AM\",\r\n    \"endDate\": \"12/12/2022 12:05:00 PM\",\r\n    \"promotionTheme\": \"Health & Hygiene\",\r\n    \"promotionlocations\": [\r\n        \"Vakola\"\r\n    ],\r\n    \"promotionActivity\": \"Vakola\"\r\n}\r\n// \"promotionId\":\"219\" // if its update need to pass the \"promotionId\"",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://{{hostname}}:{{port}}/api/evp/v1/Activity/Promotion"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Activity Promotion",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJMSzIwMDdAYXNpYW5wYWludHMuY29tIiwicm9sZSI6IlJPTEVfQ0FETUlOIiwiZXhwIjoxNjc3MjQyODQ0LCJpYXQiOjE2NzcyNDEwNDR9.VmuU5WJpC3lxwqZcfiAH76fIZdJSTlmXdt3qj1L2dMu2yCZ4aYrR-WTBFTOHbJ-Dnf3thgaHEDVLmJ7aAk-NPg"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{hostname}}:{{port}}/api/evp/v1/Activity/Promotion?searchCriteria=themeName=Water,Health%&%Hygiene:activityName=Test&pageNo=1&pageSize=10",
+							"protocol": "http",
+							"host": [
+								"{{hostname}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"evp",
+								"v1",
+								"Activity",
+								"Promotion"
+							],
+							"query": [
+								{
+									"key": "searchCriteria",
+									"value": "themeName=Water,Health%"
+								},
+								{
+									"key": "%Hygiene:activityName",
+									"value": "Test"
+								},
+								{
+									"key": "pageNo",
+									"value": "1"
+								},
+								{
+									"key": "pageSize",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Activity Promotion",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJMSzIwMDdAYXNpYW5wYWludHMuY29tIiwicm9sZSI6IlJPTEVfQ0FETUlOIiwiZXhwIjoxNjc3MjQxMTQ0LCJpYXQiOjE2NzcyMzkzNDR9.0U86u5GVIzZll0-cS7O-XhUUN1fRxjMF3u6EaA3SBewZahWZhntKiAjlmSMlV-9DHcmRLl-oNTgxX629mZYvMw"
+							}
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://{{hostname}}:{{port}}/api/evp/v1/Activity/Promotion?Id=285",
+							"protocol": "http",
+							"host": [
+								"{{hostname}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"evp",
+								"v1",
+								"Activity",
+								"Promotion"
+							],
+							"query": [
+								{
+									"key": "Id",
+									"value": "285"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Publish or Unpublish activity Feedback",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJMSzIwMDdAYXNpYW5wYWludHMuY29tIiwicm9sZSI6IlJPTEVfQ0FETUlOIiwiZXhwIjoxNjc3MjExNTMyLCJpYXQiOjE2NzcyMDk3MzJ9.Dck2Vn62YSJIsh7R9RcBauCF-OUw_aJXuHDVhn6DCrlL7acDS0ewFW5q49xxUPbWTAQlU9QdfNxwAeA2HrE5xQ"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://{{hostname}}:{{port}}/api/evp/v1/Activity/Feedback/PublishOrUnpublish?Id=251,253,254&status=Published",
+							"protocol": "http",
+							"host": [
+								"{{hostname}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"evp",
+								"v1",
+								"Activity",
+								"Feedback",
+								"PublishOrUnpublish"
+							],
+							"query": [
+								{
+									"key": "Id",
+									"value": "251,253,254"
+								},
+								{
+									"key": "status",
+									"value": "Published"
+								},
+								{
+									"key": "status",
+									"value": "UnPublished",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Download Certificate",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{acessToken}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "http://{{hostname}}:{{port}}/api/evp/v1/Activity/downloadCertificate"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Landing Page",
+			"item": [
+				{
+					"name": "Banner images",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJQMDA5OTQ2NjZAYXNpYW5wYWludHMuY29tIiwicm9sZSI6IlJPTEVfQURNSU4iLCJleHAiOjE2OTk5MzY1NzAsImlhdCI6MTY5OTkzNDc3MH0.QqQ__KRlqUpastmDsA5w6NuZSRxf9jy96aTpXYbULUya9Bli_MH0QWonfWCnE-5SP5eOUvwbO6HQkKrR41fV8A"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "images",
+									"type": "file",
+									"src": "/D:/assessment/bg.jpg"
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": "http://localhost:8082/api/evp/v1/Upload/Images/Banner"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Banner images",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJQMDA5OTQ2NjZAYXNpYW5wYWludHMuY29tIiwicm9sZSI6IlJPTEVfQURNSU4iLCJleHAiOjE2OTk5MzY1NzAsImlhdCI6MTY5OTkzNDc3MH0.QqQ__KRlqUpastmDsA5w6NuZSRxf9jy96aTpXYbULUya9Bli_MH0QWonfWCnE-5SP5eOUvwbO6HQkKrR41fV8A"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8082/api/evp/v1/Images/Banner"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Leaders Data",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJQMDA5OTQ2NjZAYXNpYW5wYWludHMuY29tIiwicm9sZSI6IlJPTEVfQURNSU4iLCJleHAiOjE2OTk5MzY1NzAsImlhdCI6MTY5OTkzNDc3MH0.QqQ__KRlqUpastmDsA5w6NuZSRxf9jy96aTpXYbULUya9Bli_MH0QWonfWCnE-5SP5eOUvwbO6HQkKrR41fV8A"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8082/api/evp/v1/Data/LeadersTalk"
+					},
+					"response": []
+				},
+				{
+					"name": "Upload Leaders Data",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJQMDA5OTQ2NjZAYXNpYW5wYWludHMuY29tIiwicm9sZSI6IlJPTEVfQURNSU4iLCJleHAiOjE2OTk5MzY1NzAsImlhdCI6MTY5OTkzNDc3MH0.QqQ__KRlqUpastmDsA5w6NuZSRxf9jy96aTpXYbULUya9Bli_MH0QWonfWCnE-5SP5eOUvwbO6HQkKrR41fV8A"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "images",
+									"type": "file",
+									"src": "/D:/assessment/pic4.PNG"
+								},
+								{
+									"key": "leaderName",
+									"value": "Siri",
+									"type": "text"
+								},
+								{
+									"key": "designation",
+									"value": "Manager",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "In asian paints we believe",
+									"type": "text"
+								}
+							]
+						},
+						"url": "http://localhost:8082/api/evp/v1/Upload/LeadersTalk"
+					},
+					"response": []
+				},
+				{
+					"name": "Upload Partners Logo",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJQMDA5OTQ2NjZAYXNpYW5wYWludHMuY29tIiwicm9sZSI6IlJPTEVfQURNSU4iLCJleHAiOjE2OTk5NDQyNzYsImlhdCI6MTY5OTk0MjQ3Nn0.pDuTr_rhB-hGS9HP5p_107HLJl8dOtbrYohPRHGUE87Ls5rZO7LlmLboxb1xnNOMLEj-R0YSIr3SoxfDAC8hjA"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "images",
+									"type": "file",
+									"src": "/D:/assessment/b4.PNG"
+								}
+							]
+						},
+						"url": "http://localhost:8082/api/evp/v1/Upload/Logo/Partner"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Partners Logo",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJQMDA5OTQ2NjZAYXNpYW5wYWludHMuY29tIiwicm9sZSI6IlJPTEVfQURNSU4iLCJleHAiOjE2OTk5NDQyNzYsImlhdCI6MTY5OTk0MjQ3Nn0.pDuTr_rhB-hGS9HP5p_107HLJl8dOtbrYohPRHGUE87Ls5rZO7LlmLboxb1xnNOMLEj-R0YSIr3SoxfDAC8hjA"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8082/api/evp/v1/Logo/Partners"
+					},
+					"response": []
+				},
+				{
+					"name": "Upload Testimonial data",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJQMDA5OTQ2NjZAYXNpYW5wYWludHMuY29tIiwicm9sZSI6IlJPTEVfQURNSU4iLCJleHAiOjE2OTk5NDQyNzYsImlhdCI6MTY5OTk0MjQ3Nn0.pDuTr_rhB-hGS9HP5p_107HLJl8dOtbrYohPRHGUE87Ls5rZO7LlmLboxb1xnNOMLEj-R0YSIr3SoxfDAC8hjA"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "images",
+									"type": "file",
+									"src": "/D:/assessment/twitter2.PNG"
+								},
+								{
+									"key": "testimonialName",
+									"value": "Kamal Pharasi",
+									"type": "text"
+								},
+								{
+									"key": "designationAndLocation",
+									"value": "Manager - Plant Accounts, Ankleshwar",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "it was really a proud moment to be a part of CSR Employee",
+									"type": "text"
+								}
+							]
+						},
+						"url": "http://localhost:8082/api/evp/v1/Upload/TestimonialData"
+					},
+					"response": []
+				},
+				{
+					"name": "Get testimonial Data",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Upload Video",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJQMDA5OTQ2NjZAYXNpYW5wYWludHMuY29tIiwicm9sZSI6IlJPTEVfQURNSU4iLCJleHAiOjE3MDAzODAyOTEsImlhdCI6MTcwMDM3ODQ5MX0.KNHHlqUdJb3RKfZrMp2Fo3gZm554vAIZCbb2xdIqtJoNZY03LGe35QUwQ3Z-AV_4hu4fTqLn627i8W8ZaNuvbw"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8082/api/evp/v1/Upload/Video?videoURL=https://www.youtube.com/watch?v=7JdwRxNqTb0&videoName=asian paints",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"api",
+								"evp",
+								"v1",
+								"Upload",
+								"Video"
+							],
+							"query": [
+								{
+									"key": "videoURL",
+									"value": "https://www.youtube.com/watch?v=7JdwRxNqTb0"
+								},
+								{
+									"key": "videoName",
+									"value": "asian paints"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Video",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Get locationwise activity",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8082/api/evp/v1/Activity/LocationWise"
+					},
+					"response": []
+				},
+				{
+					"name": "Upload Voice Of Change",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJQMDA5OTQ2NjZAYXNpYW5wYWludHMuY29tIiwicm9sZSI6IlJPTEVfQURNSU4iLCJleHAiOjE3MDIxNDQ1NjIsImlhdCI6MTcwMjE0Mjc2Mn0.wxFq0U0Ujt_fLCDsm7xjhelUhRRR3KH80V1Tn_CR77d0WIBxCYJo-QHg3nq3vGc5tfMmpsdQHhVEJ3QBzv_ihw"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "imageAndAudio",
+									"type": "file",
+									"src": [
+										"/D:/asian_paints_latest_api/asianpaintsevp-api/banner1.png",
+										"/D:/asian_paints_latest_api/asianpaintsevp-api/caudio.mp3"
+									]
+								},
+								{
+									"key": "speaksType",
+									"value": "Employee Speaks",
+									"type": "text"
+								},
+								{
+									"key": "personName",
+									"value": "Thanushree",
+									"type": "text"
+								},
+								{
+									"key": "designationOrInfo",
+									"value": "Manager, Kasna",
+									"type": "text"
+								}
+							]
+						},
+						"url": "http://localhost:8082/api/evp/v1/Upload/VoiceOfChange"
+					},
+					"response": []
+				},
+				{
+					"name": "Get all landing page details",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBzcGVyaWRpYW4uY29tIiwicm9sZSI6WyJST0xFX1NVUEVSQURNSU4iXSwic2FsdCI6IllXUnRhVzVBYzNCbGNtbGthV0Z1TG1OdmJYTmxZM0psZEE9PSIsImV4cCI6MTcwMDQ1MjA5NSwiaWF0IjoxNzAwNDUwMjk1fQ.3s02WBwWLsiqFQ_fMwkKviIFTjhuXOa7bKyeCRwR2EYzluBmTeHB8GDx0Ia0jlRS3Ay_saEa_ZB_ROGXdAF16w"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:8082/api/evp/v1/Upload/LandingPageDetails"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete banner image",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJQMDA5OTQ2NjZAYXNpYW5wYWludHMuY29tIiwicm9sZSI6IlJPTEVfQURNSU4iLCJleHAiOjE3MDIwNTYzMzIsImlhdCI6MTcwMjA1NDUzMn0.Yiegf47EMSmQzy_Szn9lJQk7UVCl1fCikGHkWFzMW4o-aRKJIxBsk_W6yXrgrY22dIbX7UF3RubKoNOdnp1t5Q"
+							}
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "id",
+									"value": "5241",
+									"type": "text"
+								}
+							]
+						},
+						"url": "http://localhost:8082/api/evp/v1/Banner/Images"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Leaders Talk Data",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJQMDA5OTQ2NjZAYXNpYW5wYWludHMuY29tIiwicm9sZSI6IlJPTEVfQURNSU4iLCJleHAiOjE3MDIwNTYzMzIsImlhdCI6MTcwMjA1NDUzMn0.Yiegf47EMSmQzy_Szn9lJQk7UVCl1fCikGHkWFzMW4o-aRKJIxBsk_W6yXrgrY22dIbX7UF3RubKoNOdnp1t5Q"
+							}
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "imageName",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": "http://localhost:8082/api/evp/v1/Delete/LeadersTalkData"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Voice Of Change Data",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "imageName",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": "http://localhost:8082/api/evp/v1/Delete/VoiceOfChangeData"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Video",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJQMDA5OTQ2NjZAYXNpYW5wYWludHMuY29tIiwicm9sZSI6IlJPTEVfQURNSU4iLCJleHAiOjE3MDIxNDM4MDMsImlhdCI6MTcwMjE0MjAwM30.hzfqrUm2vmBKDy0WTf2Lm4YVDapE6-M907sskf5JnmjRmeTHVsEPrYLadOV4OAu6GDb84c7Rl0yMAGCcwhdodQ"
+							}
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "videoURL",
+									"value": "https://www.youtube.com/embed/bF7KX1cMDsY?si=7aJi01B_X2USu3uu",
+									"type": "text"
+								}
+							]
+						},
+						"url": "http://localhost:8082/api/evp/v1/Delete/Video"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Testimonial Data",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJQMDA5OTQ2NjZAYXNpYW5wYWludHMuY29tIiwicm9sZSI6IlJPTEVfQURNSU4iLCJleHAiOjE3MDIwNTYzMzIsImlhdCI6MTcwMjA1NDUzMn0.Yiegf47EMSmQzy_Szn9lJQk7UVCl1fCikGHkWFzMW4o-aRKJIxBsk_W6yXrgrY22dIbX7UF3RubKoNOdnp1t5Q"
+							}
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "imageName",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": "http://localhost:8082/api/evp/v1/Delete/TestimonialData"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Partners Logo",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJQMDA5OTQ2NjZAYXNpYW5wYWludHMuY29tIiwicm9sZSI6IlJPTEVfQURNSU4iLCJleHAiOjE3MDIwNTYzMzIsImlhdCI6MTcwMjA1NDUzMn0.Yiegf47EMSmQzy_Szn9lJQk7UVCl1fCikGHkWFzMW4o-aRKJIxBsk_W6yXrgrY22dIbX7UF3RubKoNOdnp1t5Q"
+							}
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "imageName",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": "http://localhost:8082/api/evp/v1/Delete/Partners/Logo"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Get LOV By Category",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{acessToken}}"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{hostname}}:{{port}}/api/evp/v1/lov?category=Locations",
+					"protocol": "http",
+					"host": [
+						"{{hostname}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"evp",
+						"v1",
+						"lov"
+					],
+					"query": [
+						{
+							"key": "category",
+							"value": "Locations"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Activity List with criteria",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{acessToken}}"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{hostname}}:{{port}}/api/evp/v1/Activity?searchCriteria=modeOfParticipation=Online:themeName=Water:tagName=Tag1:location=Kasna:startDate=11/11/2022:endDate=12/11/2022",
+					"protocol": "http",
+					"host": [
+						"{{hostname}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"evp",
+						"v1",
+						"Activity"
+					],
+					"query": [
+						{
+							"key": "searchCriteria",
+							"value": "modeOfParticipation=Online:themeName=Water:tagName=Tag1:location=Kasna:startDate=11/11/2022:endDate=12/11/2022"
+						},
+						{
+							"key": "pageNo",
+							"value": "1",
+							"disabled": true
+						},
+						{
+							"key": "pageSize",
+							"value": "10",
+							"disabled": true
+						},
+						{
+							"key": "searchCriteria",
+							"value": "activityUUID=35b1f64e-de81-4de0-98f0-2f42bc864232",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Activity Details",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{acessToken}}"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://{{hostname}}:{{port}}/api/evp/v1/Activity/Details?searchCriteria=activityName=Test Activity 8:activityUUID=c553ec77-d458-44cc-9010-47325e01410e",
+					"protocol": "http",
+					"host": [
+						"{{hostname}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"evp",
+						"v1",
+						"Activity",
+						"Details"
+					],
+					"query": [
+						{
+							"key": "pageNo",
+							"value": "1",
+							"disabled": true
+						},
+						{
+							"key": "pageSize",
+							"value": "10",
+							"disabled": true
+						},
+						{
+							"key": "searchCriteria",
+							"value": "activityUUID=35b1f64e-de81-4de0-98f0-2f42bc864232",
+							"disabled": true
+						},
+						{
+							"key": "searchCriteria",
+							"value": "activityName=Test Activity 8:activityUUID=c553ec77-d458-44cc-9010-47325e01410e"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Activity Financials List with criteria",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{acessToken}}"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{hostname}}:{{port}}/api/evp/v1/Activity/ActivityFinancials?searchCriteria=activityName=Test Activty:modeOfParticipation=Online:themeName=Water:tagName=Tag1:location=Kasna:startDate=02/02/2023:endDate=02/02/2023&pageNo=1&pageSize=10",
+					"protocol": "http",
+					"host": [
+						"{{hostname}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"evp",
+						"v1",
+						"Activity",
+						"ActivityFinancials"
+					],
+					"query": [
+						{
+							"key": "searchCriteria",
+							"value": "activityName=Test Activty:modeOfParticipation=Online:themeName=Water:tagName=Tag1:location=Kasna:startDate=02/02/2023:endDate=02/02/2023"
+						},
+						{
+							"key": "pageNo",
+							"value": "1"
+						},
+						{
+							"key": "pageSize",
+							"value": "10"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Activity List with Employee Id",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{acessToken}}"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{hostname}}:{{port}}/api/evp/v1/Activity?searchCriteria=employeeId=P00994666",
+					"protocol": "http",
+					"host": [
+						"{{hostname}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"evp",
+						"v1",
+						"Activity"
+					],
+					"query": [
+						{
+							"key": "searchCriteria",
+							"value": "employeeId=P00994666"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Employee Activity Enroll Or Participate",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{acessToken}}"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"employeeId\": \"P00994666\",\r\n    \"activityUuid\": \"8e757635-ae2f-4212-9339-3f509875028b\",\r\n    \"enrolledOrParticipate\": \"Participated\"\r\n}\r\n// \"enrolledOrParticipate\":\"Enrolled\"",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://{{hostname}}:{{port}}/api/evp/v1/Activity/EnrollOrParticipate"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Activity Names By Tags",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{acessToken}}"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{hostname}}:{{port}}/api/evp/v1/Activity/Tags?location=Kasna",
+					"protocol": "http",
+					"host": [
+						"{{hostname}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"evp",
+						"v1",
+						"Activity",
+						"Tags"
+					],
+					"query": [
+						{
+							"key": "location",
+							"value": "Kasna"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Activity Participant Details",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{acessToken}}"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{hostname}}:{{port}}/api/evp/v1/Activity/ParticipantDetails?searchCriteria=activityUUID=df5cfed3-5540-47ef-983f-7a30eb9eb0ff&pageNo=1&pageSize=10",
+					"protocol": "http",
+					"host": [
+						"{{hostname}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"evp",
+						"v1",
+						"Activity",
+						"ParticipantDetails"
+					],
+					"query": [
+						{
+							"key": "searchCriteria",
+							"value": "activityUUID=df5cfed3-5540-47ef-983f-7a30eb9eb0ff"
+						},
+						{
+							"key": "pageNo",
+							"value": "1"
+						},
+						{
+							"key": "pageSize",
+							"value": "10"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Activity Participant Details with criteria",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{acessToken}}"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{hostname}}:{{port}}/api/evp/v1/Activity/ParticipantDetails?searchCriteria=activityName=Test Activty:modeOfParticipation=Online:themeName=Water:tagName=Tag1:location=Kasna:startDate=02/02/2023:endDate=02/02/2023&pageNo=1&pageSize=10",
+					"protocol": "http",
+					"host": [
+						"{{hostname}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"evp",
+						"v1",
+						"Activity",
+						"ParticipantDetails"
+					],
+					"query": [
+						{
+							"key": "searchCriteria",
+							"value": "activityName=Test Activty:modeOfParticipation=Online:themeName=Water:tagName=Tag1:location=Kasna:startDate=02/02/2023:endDate=02/02/2023"
+						},
+						{
+							"key": "pageNo",
+							"value": "1"
+						},
+						{
+							"key": "pageSize",
+							"value": "10"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Approve or Reject Participation By Admin",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{acessToken}}"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"employeeId\": \"LK2004\",\r\n    \"activityUUID\": \"df5cfed3-5540-47ef-983f-7a30eb9eb0ff\",\r\n    \"employeeName\": \"Test User 3\",\r\n    \"activityTag\": \"Tag1\",\r\n    \"activityLocation\": \"Kasna\",\r\n    \"participationHours\": \"24 hours \",\r\n    \"approvedByAdmin\": false,\r\n    \"rejectedByAdmin\": false,\r\n    \"employeeActivityStatus\": \"PARTICIPATED\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://{{hostname}}:{{port}}/api/evp/v1/Activity/ApproveOrReject"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Tag Lov",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{acessToken}}"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{hostname}}:{{port}}/api/evp/v1/lov/tags?themeName=Health %26 Hygiene",
+					"protocol": "http",
+					"host": [
+						"{{hostname}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"evp",
+						"v1",
+						"lov",
+						"tags"
+					],
+					"query": [
+						{
+							"key": "themeName",
+							"value": "Health %26 Hygiene"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Employees",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{acessToken}}"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{hostname}}:{{port}}/api/evp/v1/Employees?employeeId=P00994666",
+					"protocol": "http",
+					"host": [
+						"{{hostname}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"evp",
+						"v1",
+						"Employees"
+					],
+					"query": [
+						{
+							"key": "employeeId",
+							"value": "P00994666"
+						},
+						{
+							"key": "pageNo",
+							"value": "1",
+							"disabled": true
+						},
+						{
+							"key": "pageSize",
+							"value": "10",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Admins",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{acessToken}}"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{hostname}}:{{port}}/api/evp/v1/Admins?pageNo=1&pageSize=10&employeeId=P00994666",
+					"protocol": "http",
+					"host": [
+						"{{hostname}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"evp",
+						"v1",
+						"Admins"
+					],
+					"query": [
+						{
+							"key": "pageNo",
+							"value": "1"
+						},
+						{
+							"key": "pageSize",
+							"value": "10"
+						},
+						{
+							"key": "employeeId",
+							"value": "P00994666"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Admins",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{acessToken}}"
+					}
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://{{hostname}}:{{port}}/api/evp/v1/Admins?employeeId=P00800001",
+					"protocol": "http",
+					"host": [
+						"{{hostname}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"evp",
+						"v1",
+						"Admins"
+					],
+					"query": [
+						{
+							"key": "employeeId",
+							"value": "P00800001"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Admins",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{acessToken}}"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"employeeId\": \"P00800001\",\r\n    \"employeeName\": \"Suman Test\",\r\n    \"salutation\": \"Mr.\",\r\n    \"firstName\": \"Suman\",\r\n    \"middleName\": \"A\",\r\n    \"lastName\": \"Kumar\",\r\n    \"gender\": \"M;Male\",\r\n    \"dateOfBirth\": \"2000-12-07\",\r\n    \"bloodGroup\": \"A+\",\r\n    \"email\": \"kumar.suman@asianpaints.com\",\r\n    \"personalMobile\": \"9890876543\",\r\n    \"officialMobile\": \"9999999999\",\r\n    \"confirmationStatus\": \"Confirmed\",\r\n    \"hireDate\": \"2021-11-13\",\r\n    \"tenure\": \"3 years\",\r\n    \"lastWorkingDay\": \"2022-12-31\",\r\n    \"active\": \"Active\",\r\n    \"confirmationDate\": \"2022-03-15\",\r\n    \"payGradeId\": \"N/AS\",\r\n    \"payGradeName\": \"EXECUTIVE/MANAGER\",\r\n    \"locationCode\": \"CNIR\",\r\n    \"locationName\": \"VAKOLA\",\r\n    \"verticalCode\": \"SCHN\",\r\n    \"departmentCode\": \"RMPR\",\r\n    \"division_Code\": \"C003\",\r\n    \"function_Code\": \"MTRL\",\r\n    \"functionName\": \"Materials\",\r\n    \"verticalName\": \"Systems\",\r\n    \"departmentName\": \"IT\",\r\n    \"divisionName\": \"HEAD OFFICE\",\r\n    \"company\": \"Asian Paints Limited(APL)\",\r\n    \"exitDate\": \"1999-12-31\",\r\n    \"managerId\": 114966,\r\n    \"managerName\": \"Rony Varghese\",\r\n    \"jobCode\": 80002813,\r\n    \"jobTitle\": \" EXECUTIVE II - MANAGER\",\r\n    \"role\": \"ROLE_ADMIN\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{hostname}}:{{port}}/api/evp/v1/Admins?existingAdmin=true",
+					"protocol": "http",
+					"host": [
+						"{{hostname}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"evp",
+						"v1",
+						"Admins"
+					],
+					"query": [
+						{
+							"key": "existingAdmin",
+							"value": "true"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Tag Lov",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{acessToken}}"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://{{hostname}}:{{port}}/api/evp/v1/lov?themeName=Health & Hygiene&tagName=Tag 5",
+					"protocol": "http",
+					"host": [
+						"{{hostname}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"evp",
+						"v1",
+						"lov"
+					],
+					"query": [
+						{
+							"key": "themeName",
+							"value": "Health "
+						},
+						{
+							"key": " Hygiene",
+							"value": null
+						},
+						{
+							"key": "tagName",
+							"value": "Tag 5"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All LOV categories",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{acessToken}}"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "http://{{hostname}}:{{port}}/api/evp/v1/lovs"
+			},
+			"response": []
+		},
+		{
+			"name": "Create Or Update Activity",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{acessToken}}"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"activityUUID\": \"\",\r\n    \"activityName\": \"Test Activty\",\r\n    \"themeName\": \"Water\",\r\n    \"tagName\": \"Tag1\",\r\n    \"activityLocation\": \"Kasna\",\r\n    \"modeOfParticipation\": \"Online\",\r\n    \"startDate\": \"12/12/2022 10:05:00 AM\",\r\n    \"endDate\": \"12/12/2022 12:05:00 PM\",\r\n    \"timeOfActivity\": \"10-12 PM\",\r\n    \"timeRequired\": \"24 hours \",\r\n    \"completeDescription\": \"Test\",\r\n    \"briefDescription\": \"Test\",\r\n    \"dosInstruction\": \"dosAndDontInstruction\",\r\n    \"dontInstruction\": \"dontInstruction\",\r\n    \"contactPerson\": \"Sony lenka\",\r\n    \"contanctEmail\": \"sony.lenka@speridian.com\",\r\n    \"needRequestFromCCSR\": false,\r\n    \"requestFromCCSR\": \"\",\r\n    \"csrAdminLocation\": \"Mumbai\",\r\n    \"badgeToBeProvided\": false,\r\n    \"activityPlace\": \"Kasna\",\r\n    \"objectiveActivity\": \"objectiveActivity\",\r\n    \"created\": true,\r\n    \"published\": false,\r\n    \"activityFinancialDTO\": {\r\n        \"materialOrCreativeExpense\": \"5 lakhs\",\r\n        \"logisticExpense\": \"5 Lakhs\",\r\n        \"gratificationExpense\": \"5 Lakhs\",\r\n        \"otherExpense\": \"5 Lakhs\",\r\n        \"actualMaterialOrCreativeExpense\": \"5 lakhs\",\r\n        \"actualLogisticExpense\": \"5 Lakhs\",\r\n        \"actualGratificationExpense\": \"5 Lakhs\",\r\n        \"actualOtherExpense\": \"5 Lakhs\"\r\n    },\r\n    \"images\": [\r\n        {\r\n            \"activityName\": \"\",\r\n            \"imageName\": \"\",\r\n            \"coverPhoto\": true,\r\n            \"caption\": \"\"\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://{{hostname}}:{{port}}/api/evp/v1/Activity"
+			},
+			"response": []
+		},
+		{
+			"name": "Create Or Update Activity Copy",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{acessToken}}"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"activityName\": \"Activity Test 1\",\r\n    \"themeName\": \"Water\",\r\n    \"tagName\": \"Tag1\",\r\n    \"activityLocation\": \"Kasna\",\r\n    \"activityPlace\": \"kasna\",\r\n    \"startDate\": \"09/02/2023 10:00:00 am\",\r\n    \"endDate\": \"16/02/2023 17:00:00 pm\",\r\n    \"timeOfActivity\": \"10:00 AM - 05:00 pm\",\r\n    \"timeRequired\": \"4 Hours 0 minutes\",\r\n    \"modeOfParticipation\": \"On-site\",\r\n    \"objectiveActivity\": \"Objective\",\r\n    \"briefDescription\": \"<p>Lorem ipsum dolor sit amet, nostrum suavitate similique an quo, gloriatur sadipscing ei per. Eu vis graeci semper laboramus, sit et graeco reprehendunt. Pro ei dicunt ornatus facilis, eu est nibh tritani suscipiantur. Mundi veritus no vim, debet alterum fierent per eu. Voluptua sensibus expetendis mea an. Audire referrentur et vis, eirmod rationibus sed cu.</p>\",\r\n    \"completeDescription\": \"<p>Lorem ipsum dolor sit amet, nostrum suavitate similique an quo, gloriatur sadipscing ei per. Eu vis graeci semper laboramus, sit et graeco reprehendunt. Pro ei dicunt ornatus facilis, eu est nibh tritani suscipiantur. Mundi veritus no vim, debet alterum fierent per eu. Voluptua sensibus expetendis mea an. Audire referrentur et vis, eirmod rationibus sed cu.</p>\",\r\n    \"dosInstruction\": \"<p>Lorem ipsum dolor sit amet, nostrum suavitate similique an quo, gloriatur sadipscing ei per. Eu vis graeci semper laboramus, sit et graeco reprehendunt. Pro ei dicunt ornatus facilis, eu est nibh tritani suscipiantur. Mundi veritus no vim, debet alterum fierent per eu. Voluptua sensibus expetendis mea an. Audire referrentur et vis, eirmod rationibus sed cu.</p>\",\r\n    \"dontInstruction\": \"<p>Lorem ipsum dolor sit amet, nostrum suavitate similique an quo, gloriatur sadipscing ei per. Eu vis graeci semper laboramus, sit et graeco reprehendunt. Pro ei dicunt ornatus facilis, eu est nibh tritani suscipiantur. Mundi veritus no vim, debet alterum fierent per eu. Voluptua sensibus expetendis mea an. Audire referrentur et vis, eirmod rationibus sed cu.</p>\",\r\n    \"contactPerson\": \"Thanseer\",\r\n    \"contanctEmail\": \"thanseer.aliyar@speridian.com\",\r\n    \"csrAdminLocation\": \"Bangalore\",\r\n    \"requestFromCCSR\": \"Lorem ipsum dolor sit amet, nostrum suavitate similique an quo, gloriatur sadipscing ei per. Eu vis graeci semper laboramus, sit et graeco reprehendunt. Pro ei dicunt ornatus facilis, eu est nibh tritani suscipiantur. Mundi veritus no vim, debet alterum fierent per eu. Voluptua sensibus expetendis mea an. Audire referrentur et vis, eirmod rationibus sed cu.\\n\",\r\n    \"needRequestFromCCSR\": true,\r\n    \"badgeToBeProvided\": \"true\",\r\n    \"activityFinancialDTO\": {\r\n        \"materialOrCreativeExpense\": \"1000\",\r\n        \"logisticExpense\": \"1000\",\r\n        \"gratificationExpense\": \"1000\",\r\n        \"otherExpense\": \"1000\",\r\n        \"actualMaterialExpense\": \"\",\r\n        \"actualLogisticExpense\": \"\",\r\n        \"actualGratificationExpense\": \"\",\r\n        \"actualOtherExpense\": \"\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://{{hostname}}:{{port}}/api/evp/v1/Activity"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Activity",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{acessToken}}"
+					}
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://{{hostname}}:{{port}}/api/evp/v1/Activity?activityNameOrUUID=activityUUID=9b20f299-c6c8-44dc-8b6b-4a1d2669f45e",
+					"protocol": "http",
+					"host": [
+						"{{hostname}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"evp",
+						"v1",
+						"Activity"
+					],
+					"query": [
+						{
+							"key": "activityNameOrUUID",
+							"value": "activityName=Test Activty",
+							"disabled": true
+						},
+						{
+							"key": "activityNameOrUUID",
+							"value": "activityUUID=9b20f299-c6c8-44dc-8b6b-4a1d2669f45e"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login Api",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"P00994666@asianpaints.com\",\r\n    \"password\": \"Front@321\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://{{hostname}}:{{port}}/api/evp/v1/Login"
+			},
+			"response": []
+		},
+		{
+			"name": "Logout Api",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": "http://{{hostname}}:{{port}}/api/evp/v1/Logout"
+			},
+			"response": []
+		},
+		{
+			"name": "Switching Profile API",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{acessToken}}"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"LK2007@asianpaints.com\",\r\n    \"switchProfile\": true,\r\n    \"roleToSwitch\": \"EMPLOYEE\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://{{hostname}}:{{port}}/api/evp/v1/SwitchProfile"
+			},
+			"response": []
+		},
+		{
+			"name": "Refresh Access Token",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"P00994666@asianpaints.com\",\r\n    \"refreshToken\": \"a6ba7f00-1ccb-4a68-86e7-b40e32b7a7fd\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://{{hostname}}:{{port}}/api/evp/v1/RefreshToken"
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Download CSV file Activity Participants",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{acessToken}}"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://{{hostname}}:{{port}}/api/evp/v1/downloadCSV?searchCriteria=modeOfParticipation=Online:themeName=Water:tagName=Tag1:location=Kasna:startDate=02/02/2023:endDate=02/02/2023&category=Finance",
+					"protocol": "http",
+					"host": [
+						"{{hostname}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"evp",
+						"v1",
+						"downloadCSV"
+					],
+					"query": [
+						{
+							"key": "searchCriteria",
+							"value": "modeOfParticipation=Online:themeName=Water:tagName=Tag1:location=Kasna:startDate=02/02/2023:endDate=02/02/2023"
+						},
+						{
+							"key": "category",
+							"value": "Finance"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Download CSV file For Dashboard with Criteria",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{acessToken}}"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://{{hostname}}:{{port}}/api/evp/v1/downloadCSV/DashBoard?searchCriteria=activityName=Test One,Test Activity Upload,Test Activity For Desc,Test Activity 8,Activity Test 1,Activity Test 3,Activity Test 4,Test Activty 9,Test Activty 12,Activity Test 2:startDate=01/02/2023:endDate=28/03/2023:tagName=Tag 3:location=Kasna:themeName=Health %26 Hygiene,Water,Disaster Relief,Others:modeOfParticipation=&category=ThemeWise&subcategory=ParticipationWise",
+					"protocol": "http",
+					"host": [
+						"{{hostname}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"evp",
+						"v1",
+						"downloadCSV",
+						"DashBoard"
+					],
+					"query": [
+						{
+							"key": "searchCriteria",
+							"value": "activityName=Test One,Test Activity Upload,Test Activity For Desc,Test Activity 8,Activity Test 1,Activity Test 3,Activity Test 4,Test Activty 9,Test Activty 12,Activity Test 2:startDate=01/02/2023:endDate=28/03/2023:tagName=Tag 3:location=Kasna:themeName=Health %26 Hygiene,Water,Disaster Relief,Others:modeOfParticipation="
+						},
+						{
+							"key": "category",
+							"value": "ThemeWise"
+						},
+						{
+							"key": "subcategory",
+							"value": "ParticipationWise"
+						},
+						{
+							"key": "subcategory",
+							"value": "UniqueParticipationWise",
+							"disabled": true
+						},
+						{
+							"key": "subcategory",
+							"value": "ParticipationHoursWise",
+							"disabled": true
+						},
+						{
+							"key": "category",
+							"value": "ModeWise",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Upload Employee Participation",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{acessToken}}"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/C:/Users/sony.lenka/Desktop/Data.csv"
+						}
+					]
+				},
+				"url": "http://{{hostname}}:{{port}}/api/evp/v1/Upload/ParticipantDetails"
+			},
+			"response": []
+		},
+		{
+			"name": "Upload Images",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{acessToken}}"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "images",
+							"type": "file",
+							"src": [
+								"/C:/Users/sony.lenka/Desktop/Assessement Sheet (0000000D).docx",
+								"/C:/Users/sony.lenka/Desktop/Capture.PNG",
+								"/C:/Users/sony.lenka/Desktop/Darpan Logo.svg"
+							]
+						},
+						{
+							"key": "imageType",
+							"value": "EMPLOYEE_UPLOAD",
+							"type": "text"
+						},
+						{
+							"key": "activityName",
+							"value": "Test Activity 8",
+							"type": "text"
+						},
+						{
+							"key": "activityTheme",
+							"value": "Health & Hygiene",
+							"type": "text"
+						},
+						{
+							"key": "activityTag",
+							"value": "Tag 4",
+							"type": "text"
+						},
+						{
+							"key": "startDate",
+							"value": "14/02/2023 01:05:00 pm",
+							"type": "text"
+						},
+						{
+							"key": "endDate",
+							"value": "15/02/2023 05:05:00 pm",
+							"type": "text"
+						},
+						{
+							"key": "activityLocation",
+							"value": "Kasna",
+							"type": "text"
+						}
+					]
+				},
+				"url": "http://{{hostname}}:{{port}}/api/evp/v1/Upload/Images"
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Images",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{acessToken}}"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{hostname}}:{{port}}/api/evp/v1/Images?imageType=ADMIN_UPLOAD&searchCriteria=activityName=Test Activity 8",
+					"protocol": "http",
+					"host": [
+						"{{hostname}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"evp",
+						"v1",
+						"Images"
+					],
+					"query": [
+						{
+							"key": "imageType",
+							"value": "ADMIN_UPLOAD"
+						},
+						{
+							"key": "searchCriteria",
+							"value": "activityName=Test Activity 8"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Images By Criteria",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{acessToken}}"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{hostname}}:{{port}}/api/evp/v1/Images?imageType=ALL&searchCriteria=activityName=Test Activity 8:modeOfParticipation=:themeName=Water:tagName=Tag1:location=:startDate=:endDate=&pageNo=1&pageSize=10",
+					"protocol": "http",
+					"host": [
+						"{{hostname}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"evp",
+						"v1",
+						"Images"
+					],
+					"query": [
+						{
+							"key": "imageType",
+							"value": "ALL"
+						},
+						{
+							"key": "searchCriteria",
+							"value": "activityName=Test Activity 8:modeOfParticipation=:themeName=Water:tagName=Tag1:location=:startDate=:endDate="
+						},
+						{
+							"key": "pageNo",
+							"value": "1"
+						},
+						{
+							"key": "pageSize",
+							"value": "10"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Images For",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{acessToken}}"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{hostname}}:{{port}}/api/evp/v1/Images?imageType=EMPLOYEE_UPLOAD&searchCriteria=activityName=:modeOfParticipation=:themeName=:tagName=:location=:startDate=12/12/2022:endDate=12/12/2023&pageNo=1&pageSize=10",
+					"protocol": "http",
+					"host": [
+						"{{hostname}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"evp",
+						"v1",
+						"Images"
+					],
+					"query": [
+						{
+							"key": "imageType",
+							"value": "EMPLOYEE_UPLOAD"
+						},
+						{
+							"key": "searchCriteria",
+							"value": "activityName=:modeOfParticipation=:themeName=:tagName=:location=:startDate=12/12/2022:endDate=12/12/2023"
+						},
+						{
+							"key": "pageNo",
+							"value": "1"
+						},
+						{
+							"key": "pageSize",
+							"value": "10"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Publish Or Unpublish Photo",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{acessToken}}"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"imageName\": \"Darpan Logo.svg\",\r\n    \"activityName\": \"Test Activty\",\r\n    \"publishOrUnpublish\": false\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://{{hostname}}:{{port}}/api/evp/v1/Images/PublishOrUnPublish"
+			},
+			"response": []
+		},
+		{
+			"name": "Upload Photo To Gallery By Admin",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{acessToken}}"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"imageName\": \"Darpan Logo.svg\",\r\n    \"activityName\": \"Test Activty\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://{{hostname}}:{{port}}/api/evp/v1/Images/UploadToGallery"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Photo From Gallery Or Activity Details",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{acessToken}}"
+					}
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n    {\r\n        \"imageName\": \"Assessement Sheet (0000000D).docx\",\r\n        \"activityName\": \"Test Activity 8\",\r\n        \"softDelete\": false\r\n    }\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://{{hostname}}:{{port}}/api/evp/v1/Images"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Dashboard Past Activity Details with criteria",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{acessToken}}"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{hostname}}:{{port}}/api/evp/v1/DashBoard/PastActivity?pageNo=1&pageSize=10&searchCriteria=activityName=Test One,Test Activity Upload,Test Activity For Desc,Test Activity 8,Activity Test 1,Activity Test 3,Activity Test 4,Test Activty 9,Test Activty 12,Activity Test 2:startDate=01/03/2023:endDate=28/03/2023:tagName=Tag 3:location=Kasna:themeName=Health %26 Hygiene,Water,Disaster Relief,Others:modeOfParticipation=",
+					"protocol": "http",
+					"host": [
+						"{{hostname}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"evp",
+						"v1",
+						"DashBoard",
+						"PastActivity"
+					],
+					"query": [
+						{
+							"key": "pageNo",
+							"value": "1"
+						},
+						{
+							"key": "pageSize",
+							"value": "10"
+						},
+						{
+							"key": "searchCriteria",
+							"value": "activityName=Test One,Test Activity Upload,Test Activity For Desc,Test Activity 8,Activity Test 1,Activity Test 3,Activity Test 4,Test Activty 9,Test Activty 12,Activity Test 2:startDate=01/03/2023:endDate=28/03/2023:tagName=Tag 3:location=Kasna:themeName=Health %26 Hygiene,Water,Disaster Relief,Others:modeOfParticipation="
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Dashboard Header Details",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{acessToken}}"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{hostname}}:{{port}}/api/evp/v1/DashBoard/Header?searchCriteria=activityName=Test One,Test Activity Upload,Test Activity For Desc,Test Activity 8,Activity Test 1,Activity Test 3,Activity Test 4,Test Activty 9,Test Activty 12,Activity Test 2:startDate=01/02/2023:endDate=28/03/2023:tagName=Tag 3:location=Kasna:themeName=Health %26 Hygiene,Water,Disaster Relief,Others:modeOfParticipation=",
+					"protocol": "http",
+					"host": [
+						"{{hostname}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"evp",
+						"v1",
+						"DashBoard",
+						"Header"
+					],
+					"query": [
+						{
+							"key": "searchCriteria",
+							"value": "activityName=Test One,Test Activity Upload,Test Activity For Desc,Test Activity 8,Activity Test 1,Activity Test 3,Activity Test 4,Test Activty 9,Test Activty 12,Activity Test 2:startDate=01/02/2023:endDate=28/03/2023:tagName=Tag 3:location=Kasna:themeName=Health %26 Hygiene,Water,Disaster Relief,Others:modeOfParticipation="
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Dashboard Details",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{acessToken}}"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{hostname}}:{{port}}/api/evp/v1/DashBoard/DashBoardDetails?searchCriteria=activityName=Test One,Test Activity Upload,Test Activity For Desc,Test Activity 8,Activity Test 1,Activity Test 3,Activity Test 4,Test Activty 9,Test Activty 12,Activity Test 2:startDate=01/02/2023:endDate=28/03/2023:tagName=Tag 3:location=Kasna:themeName=Health %26 Hygiene,Water,Disaster Relief,Others:modeOfParticipation=",
+					"protocol": "http",
+					"host": [
+						"{{hostname}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"evp",
+						"v1",
+						"DashBoard",
+						"DashBoardDetails"
+					],
+					"query": [
+						{
+							"key": "searchCriteria",
+							"value": "activityName=Test One,Test Activity Upload,Test Activity For Desc,Test Activity 8,Activity Test 1,Activity Test 3,Activity Test 4,Test Activty 9,Test Activty 12,Activity Test 2:startDate=01/02/2023:endDate=28/03/2023:tagName=Tag 3:location=Kasna:themeName=Health %26 Hygiene,Water,Disaster Relief,Others:modeOfParticipation="
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "hostname",
+			"value": "localhost",
+			"type": "string"
+		},
+		{
+			"key": "port",
+			"value": "8082",
+			"type": "string"
+		},
+		{
+			"key": "acessToken",
+			"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJQMDA5OTQ2NjZAYXNpYW5wYWludHMuY29tIiwicm9sZSI6IlJPTEVfQURNSU4iLCJleHAiOjE2NzczOTAyNjksImlhdCI6MTY3NzM4ODQ2OX0.C5LMpd826_WLlkOl1ZnnKY1F-EWI6cJpwNACgRcXm_rXN8wC_-8KvlOtrmoN9i_jsZGKUUhrpQy1plib91WJ6w",
+			"type": "string"
+		}
+	]
+}

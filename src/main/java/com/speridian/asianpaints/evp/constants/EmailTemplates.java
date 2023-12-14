@@ -1,0 +1,165 @@
+package com.speridian.asianpaints.evp.constants;
+
+public class EmailTemplates {
+	
+	public static final String 	EMPLOYEE_ENROLL_ACTIVITY_SUBJECT="EVP Notification: Confirmation of enrolment for Volunteering";
+	
+	
+	public static final String 	EMPLOYEE_ENROLL_ACTIVITY="<html xmlns=\"http://www.w3.org/1999/xhtml\">\r\n"
+			+ "<body style=\"font-family: Arial, sans-serif !important; font-weight: 400; font-size: 12px; line-height: 18px; color: #212529;\">\r\n"
+			+ "    <!-- main table-->\r\n"
+			+ "        <table style=\"border-spacing: 0; width:100%;\" width=\"100%\">\r\n"
+			+ "            <!-- inner section-->\r\n"
+			+ "            <tr>\r\n"
+			+ "                <td>\r\n"
+			+ "                    <p>Dear VOLUNTEER_NAME,</p>\r\n"
+			+ "                    <p>Thank you for your interest in volunteering for our upcoming activity. We hope that your volunteering experience will be both rewarding and enjoyable.</p>\r\n"
+			+ "                    <p>We appreciate your dedication to our cause and look forward to working with you.</p>\r\n"
+			+ "                    <p>For further information visit <a href=\"#\">LINK</a></p>\r\n"
+			+ "                    <br>\r\n"
+			+ "                    <p>Best Regards,</p>\r\n"
+			+ "                    <p style=\"font-size: 14px; font-weight: 700;\">EVP Team</p>\r\n"
+			+ "                </td>\r\n"
+			+ "            </tr>\r\n"
+			+ "            <!-- End of inner section-->\r\n"
+			+ "        </table>\r\n"
+			+ "        <!-- End of main table-->\r\n"
+			+ "\r\n"
+			+ "</body>\r\n"
+			+ "\r\n"
+			+ "</html>";
+	
+	
+	public static final String 	NEED_SUPPORT_FROM_SUBJECT="EVP Notification: Support requested from CCSR by ActivityCreator for ActivityName at Location";
+	
+
+	
+	public static final String 	NEED_SUPPORT_FROM_CCSR="<html xmlns=\"http://www.w3.org/1999/xhtml\">\r\n"
+			+ "<body style=\"font-family: Arial, sans-serif !important; font-weight: 400; font-size: 12px; line-height: 18px; color: #212529;\">    \r\n"
+			+ "        <!-- main table-->\r\n"
+			+ "        <table style=\"border-spacing: 0; width:100%;\" width=\"100%\">\r\n"
+			+ "            <!-- inner section-->\r\n"
+			+ "            <tr>\r\n"
+			+ "                <td>\r\n"
+			+ "                    <p>Hi Team,</p>\r\n"
+			+ "                    <p style=\"font-size: 14px; font-weight: 700;\">Below is the support required from CSSR :</p>\r\n"
+			+ "                    <p>“REQUEST_FROM_CCSR”</p>\r\n"
+			+ "                    <br>\r\n"
+			+ "                    <p>Best Regards,</p>\r\n"
+			+ "                    <p style=\"font-size: 14px; font-weight: 700;\">ADMIN_NAME</p>\r\n"
+			+ "                </td>\r\n"
+			+ "            </tr>\r\n"
+			+ "            <!-- End of inner section-->\r\n"
+			+ "        </table>\r\n"
+			+ "        <!-- End of main table-->\r\n"
+			+ "\r\n"
+			+ "</body>\r\n"
+			+ "\r\n"
+			+ "</html>";
+	
+	public static final String 	REJECTED_ATTENDANCE_BY_ADMIN_SUBJECT="EVP Notification: Decline of your Participation";
+	
+	
+	public static final String 	REJECTED_ATTENDANCE_BY_ADMIN="<html xmlns=\"http://www.w3.org/1999/xhtml\">\r\n"
+			+ "<body style=\"font-family: Arial, sans-serif !important; font-weight: 400; font-size: 12px; line-height: 18px; color: #212529;\">    \r\n"
+			+ "        <!-- main table-->\r\n"
+			+ "        <table style=\"border-spacing: 0; width:100%;\" width=\"100%\">\r\n"
+			+ "            <!-- inner section-->\r\n"
+			+ "            <tr>\r\n"
+			+ "                <td>\r\n"
+			+ "                    <p>Dear EMPLOYEE_NAME,</p>\r\n"
+			+ "                    <p>This is to inform you that your participation has been declined for ACTIVITY_NAME. If you would like further details regarding the reason for our decision, please do not hesitate to contact our administration team.</p>\r\n"
+			+ "                    <p>Thank you for your interest and understanding.</p>\r\n"
+			+ "                    <br>\r\n"
+			+ "                    <p>Best Regards,</p>\r\n"
+			+ "                    <p style=\"font-size: 14px; font-weight: 700;\">EVP Team</p>\r\n"
+			+ "                </td>\r\n"
+			+ "            </tr>\r\n"
+			+ "            <!-- End of inner section-->\r\n"
+			+ "        </table>\r\n"
+			+ "        <!-- End of main table-->\r\n"
+			+ "</body>\r\n"
+			+ "\r\n"
+			+ "</html>";
+	
+	public static final String 	ADMIN_PUBLISH_ACTIVITY_SUBJECT="EVP Notification: ActivityName scheduled by ActivityCreator at Location on DateOfActivity";
+	
+	public static final String 	ADMIN_PUBLISH_ACTIVITY="<html xmlns=\"http://www.w3.org/1999/xhtml\">\r\n"
+			+ "<body\r\n"
+			+ "    style=\"font-family: Arial, sans-serif !important; font-weight: 400; font-size: 12px; line-height: 18px; color: #212529;\">\r\n"
+			+ "    \r\n"
+			+ "        <!-- main table-->\r\n"
+			+ "        <table\r\n"
+			+ "            style=\"border-spacing: 0; width:100%; max-width:612px;border-spacing: 0;\"\r\n"
+			+ "            width=\"100%\">\r\n"
+			+ "            <!-- inner section-->\r\n"
+			+ "            <tr>\r\n"
+			+ "                <td>\r\n"
+			+ "                    <p>Hi All,</p>\r\n"
+			+ "                    <p style=\"font-size: 14px; font-weight: 700;\">Below are the details\r\n"
+			+ "                        of activity scheduled :</p>                  \r\n"
+			+ "                    \r\n"
+			+ "                        <p>Activity Name : ACTIVITY_NAME</p>\r\n"
+			+ "                        <p>Scheduled By : SCHEDULED_BY</p>\r\n"
+			+ "                        <p>Locations : LOCATION</p>\r\n"
+			+ "                        <p>Financial Info : </p>\r\n"
+			+ "                        <table style=\"border-collapse: collapse; border: 1px solid #7e7e7e;\" cellpadding=\"7\">\r\n"
+			+ "                            <tr style=\"border-collapse: collapse; border: 1px solid #7e7e7e;\">\r\n"
+			+ "                                <td style=\"border-collapse: collapse; border: 1px solid #7e7e7e;\">Material / Campaigning/ Creative Expense</td>\r\n"
+			+ "                                <td style=\"border-collapse: collapse; border: 1px solid #7e7e7e;\">EMATERIAL_EXPENSE</td>\r\n"
+			+ "                            </tr style=\"border-collapse: collapse; border: 1px solid #7e7e7e;\">\r\n"
+			+ "                            <tr style=\"border-collapse: collapse; border: 1px solid #7e7e7e;\">\r\n"
+			+ "                                <td style=\"border-collapse: collapse; border: 1px solid #7e7e7e;\">Logistic Expense</td>\r\n"
+			+ "                                <td style=\"border-collapse: collapse; border: 1px solid #7e7e7e;\">ELOGISTIC_EXPENSE</td>\r\n"
+			+ "                            </tr>\r\n"
+			+ "                            <tr style=\"border-collapse: collapse; border: 1px solid #7e7e7e;\">\r\n"
+			+ "                                <td style=\"border-collapse: collapse; border: 1px solid #7e7e7e;\">Gratification Expense</td>\r\n"
+			+ "                                <td style=\"border-collapse: collapse; border: 1px solid #7e7e7e;\">EGRATIFICATION_EXPENSE</td>\r\n"
+			+ "                            </tr>\r\n"
+			+ "                            <tr style=\"border-collapse: collapse; border: 1px solid #7e7e7e;\">\r\n"
+			+ "                                <td style=\"border-collapse: collapse; border: 1px solid #7e7e7e;\">Other</td>\r\n"
+			+ "                                <td style=\"border-collapse: collapse; border: 1px solid #7e7e7e;\">EOTHER_EXPENSE</td>\r\n"
+			+ "                            </tr>\r\n"
+			+ "                        </table>\r\n"
+			+ "                        <br>\r\n"
+			+ "                                         \r\n"
+			+ "                        <p>Activity Link : <a href=\"#\">ACTIVITY_LINK</a></p>                   \r\n"
+			+ "                        <br>\r\n"
+			+ "                    <p>Best Regards,</p>\r\n"
+			+ "                    <p style=\"font-size: 14px; font-weight: 700;\">EVP Team</p>\r\n"
+			+ "                </td>\r\n"
+			+ "            </tr>\r\n"
+			+ "            <!-- End of inner section-->\r\n"
+			+ "        </table>\r\n"
+			+ "        <!-- End of main table-->\r\n"
+			+ "    \r\n"
+			+ "</body>\r\n"
+			+ "\r\n"
+			+ "</html>";
+	
+	public static final String 	EMPLOYEE_CONFIRMS_PARTICIPATION_SUBJECT="EVP Notification: Thank you for Making a Difference as a volunteer";
+	
+
+	
+	public static final String 	EMPLOYEE_CONFIRMS_PARTICIPATION="<html xmlns=\"http://www.w3.org/1999/xhtml\">\r\n"
+			+ "<body style=\"font-family: Arial, sans-serif !important; font-weight: 400; font-size: 12px; line-height: 18px; color: #212529;\">\r\n"
+			+ "        <!-- main table-->\r\n"
+			+ "        <table style=\"border-spacing: 0; width:100%;\" width=\"100%\">\r\n"
+			+ "            <!-- inner section-->\r\n"
+			+ "            <tr>\r\n"
+			+ "                <td>\r\n"
+			+ "                    <p>Dear VOLUNTEER_NAME,</p>\r\n"
+			+ "                    <p>We extend our heartfelt gratitude for your invaluable contribution as a volunteer during ACTIVITY_NAME. Your unwavering dedication to our cause has made a significant impact, and we are truly grateful for your support. We sincerely hope that your volunteer experience was fulfilling, and we look forward to your continued involvement with us.</p>\r\n"
+			+ "                    <br>\r\n"
+			+ "                    <p>Best Regards,</p>\r\n"
+			+ "                    <p style=\"font-size: 14px; font-weight: 700;\">EVP Team</p>\r\n"
+			+ "                </td>\r\n"
+			+ "            </tr>\r\n"
+			+ "            <!-- End of inner section-->\r\n"
+			+ "        </table>\r\n"
+			+ "        <!-- End of main table-->\r\n"
+			+ "</body>\r\n"
+			+ "\r\n"
+			+ "</html>";
+
+}
