@@ -23,6 +23,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -68,6 +69,7 @@ import com.speridian.asianpaints.evp.dto.EmployeeActivityResponse;
 import com.speridian.asianpaints.evp.dto.EmployeeActivityResponseDTO;
 import com.speridian.asianpaints.evp.dto.GalleryResponseDTO;
 import com.speridian.asianpaints.evp.dto.ImageDTO;
+import com.speridian.asianpaints.evp.dto.LocationActivityDTO;
 import com.speridian.asianpaints.evp.dto.OngoingActivities;
 import com.speridian.asianpaints.evp.dto.PastActivities;
 import com.speridian.asianpaints.evp.dto.SearchCriteria;
@@ -81,6 +83,7 @@ import com.speridian.asianpaints.evp.entity.ActivityPromotion;
 import com.speridian.asianpaints.evp.entity.ActivityPromotionLocation;
 import com.speridian.asianpaints.evp.entity.EmployeeActivityHistory;
 import com.speridian.asianpaints.evp.entity.MailConfig;
+import com.speridian.asianpaints.evp.entity.SelectedActivity;
 import com.speridian.asianpaints.evp.exception.EvpException;
 import com.speridian.asianpaints.evp.master.entity.Employee;
 import com.speridian.asianpaints.evp.master.repository.EmployeeRepository;
@@ -98,6 +101,7 @@ import com.speridian.asianpaints.evp.transactional.repository.ActivityPromotionL
 import com.speridian.asianpaints.evp.transactional.repository.ActivityPromotionRepository;
 import com.speridian.asianpaints.evp.transactional.repository.ActivityRepository;
 import com.speridian.asianpaints.evp.transactional.repository.EmployeeActivityHistoryRepository;
+import com.speridian.asianpaints.evp.transactional.repository.LocationActivityRepository;
 import com.speridian.asianpaints.evp.transactional.repository.MailConfigRepository;
 import com.speridian.asianpaints.evp.util.CommonSpecification;
 import com.speridian.asianpaints.evp.util.CommonUtils;
@@ -149,6 +153,9 @@ public class ActivityServiceImpl implements ActivityService {
 
 	@Autowired
 	private LoginService loginService;
+	
+	@Autowired
+	private LocationActivityRepository selectedActivityRepo;
 
 	@Value("${authorised.signature}")
 	private String signature;
@@ -2485,8 +2492,8 @@ public class ActivityServiceImpl implements ActivityService {
 		return outputStream.toByteArray();
 	}
 
-	@Override
-	public List<CreateOrUpdateActivityDTO> getLocationWisePastActivities() {
+	@Override		 //To get Activities for Landing Page.
+	public List<CreateOrUpdateActivityDTO> getLocationWisePastActivities() { 
 		Map<String, Long> locationLovMap = evpLovService.getLocationLovMap();
 		Map<String, Long> themeLovMap = evpLovService.getThemeLovMap();
 		Map<String, Long> modeLovMap = evpLovService.getModeLovMap();
@@ -2495,40 +2502,33 @@ public class ActivityServiceImpl implements ActivityService {
 		Map<Long, String> lovMapWithIdKey2 = CommonUtils.getLovMapWithIdKey(themeLovMap);
 		Map<Long, String> lovMapWithIdKey3 = CommonUtils.getLovMapWithIdKey(modeLovMap);
 		Map<Long, String> lovMapWithIdKey4 = CommonUtils.getLovMapWithIdKey(tagLovMap);
-
-		Sort sort = Sort.by(Sort.Direction.DESC, "createdOn");
-		List<Activity> activities = (List<Activity>) activityRepository.findAll(sort);
-		Map<String, List<Long>> activityLocationMap = getActivityLocationMap(activities);
-		LocalDate currentDate = LocalDate.now();
-		List<Activity> pastActivities = activities.stream().filter(activity -> activity.isPublished())
-				.filter(activity -> activity.getEndDate().toLocalDate().compareTo(currentDate) < 0)
-				.collect(Collectors.toList());
-
-		List<String> allLocations = new ArrayList<>(locationLovMap.keySet());
-
-		List<CreateOrUpdateActivityDTO> activityList = CommonUtils.convertActivitiesListToDTO(lovMapWithIdKey,
-				lovMapWithIdKey2, lovMapWithIdKey3, lovMapWithIdKey4, pastActivities, activityLocationMap);
-
-//		Map<String, List<CreateOrUpdateActivityDTO>> locationWiseActivityMap = createLocationWiseActivityMap(
-//				activityList, allLocations);
-
-		List<CreateOrUpdateActivityDTO> uniqueActivities = createUnique(activityList);
-
-		getEnrolledOrParticipatedEmployeesForPast(uniqueActivities);
+		
+		List<SelectedActivity> pastSelectedActivities=(List<SelectedActivity>) selectedActivityRepo.findAll();
+		List<Activity> activityList=new ArrayList<>();
+        pastSelectedActivities.stream()
+        	.forEach(pS -> {
+        		 String activityId=pS.getNameAndId().split(" - ")[0];
+        		 Optional<Activity> activity=activityRepository.findByActivityId(activityId);
+        		 activityList.add(activity.get());
+        });
+        Map<String, List<Long>> activityLocationMap = getActivityLocationMap(activityList);
+        List<CreateOrUpdateActivityDTO> activities = CommonUtils.convertActivitiesListToDTO(lovMapWithIdKey,
+				lovMapWithIdKey2, lovMapWithIdKey3, lovMapWithIdKey4, activityList, activityLocationMap);
+		     
+		getEnrolledOrParticipatedEmployeesForPast(activities);
 
 		String role = CommonUtils.getAssignedRole(request, jwtUtil);
 		if (role.equals("ROLE_EMPLOYEE")) {
 
-			getEmployeeParticipantStatusForPast(uniqueActivities);
+			getEmployeeParticipantStatusForPast(activities);
 
 		}
 
-		getAdminUploadImagesForPast(uniqueActivities);
-
-		return uniqueActivities;
-
+		getAdminUploadImagesForPast(activities);
+//
+		return activities;
 	}
-
+	
 	public Map<String, List<CreateOrUpdateActivityDTO>> createLocationWiseActivityMap(
 			List<CreateOrUpdateActivityDTO> activityList, List<String> allLocations) {
 		Map<String, List<CreateOrUpdateActivityDTO>> locationWiseActivityMap = new HashMap<>();
@@ -2544,47 +2544,22 @@ public class ActivityServiceImpl implements ActivityService {
 		return locationWiseActivityMap;
 	}
 
-	public List<CreateOrUpdateActivityDTO> createUnique(List<CreateOrUpdateActivityDTO> activities){
-		
-		List<CreateOrUpdateActivityDTO> uniqueActivities=new ArrayList<>();
-		for(CreateOrUpdateActivityDTO activity : activities)
-		{
-			if(uniqueActivities.size()>=10)
-			{
+	public List<CreateOrUpdateActivityDTO> createUnique(List<CreateOrUpdateActivityDTO> activities) {
+
+		List<CreateOrUpdateActivityDTO> uniqueActivities = new ArrayList<>();
+		for (CreateOrUpdateActivityDTO activity : activities) {
+			if (uniqueActivities.size() >= 10) {
 				break;
-				
-			}else if(!uniqueActivities.contains(activity))
-			{
+
+			} else if (!uniqueActivities.contains(activity)) {
 				uniqueActivities.add(activity);
 			}
 
 		}
-		
+
 		return uniqueActivities;
 	}
-	
-//	public List<CreateOrUpdateActivityDTO> createUnique(
-//			Map<String, List<CreateOrUpdateActivityDTO>> locationWiseActivity) {
-//		List<CreateOrUpdateActivityDTO> uniqueActivities = new ArrayList<>();
-//		for (String location : locationWiseActivity.keySet()) {
-//
-//			List<CreateOrUpdateActivityDTO> locationActivityList = locationWiseActivity.get(location);
-//			for (int i = 0; i < locationActivityList.size(); i++) {
-//
-//				if (uniqueActivities.contains(locationActivityList.get(i)) && i != locationActivityList.size() - 1) {
-//
-//				} else {
-//					uniqueActivities.add(locationActivityList.get(i));
-//					break;
-//				}
-//			}
-//
-//		}
-//
-//		return uniqueActivities;
-//	}
 
-	
 	private void getEnrolledOrParticipatedEmployeesForPast(List<CreateOrUpdateActivityDTO> pastActivities) {
 		List<String> pastActivityUUIDS = null;
 
@@ -2658,6 +2633,141 @@ public class ActivityServiceImpl implements ActivityService {
 
 		}
 
+	}
+
+	@Override
+	public List<LocationActivityDTO> getLocationActivitiesForConfig() {
+		Map<String, List<String>> nameIdMap = new HashMap<>();
+		List<LocationActivityDTO> locationActivity=new ArrayList<>();
+		try {
+			Map<String, Long> locationLovMap = evpLovService.getLocationLovMap();
+			Map<String, Long> themeLovMap = evpLovService.getThemeLovMap();
+			Map<String, Long> modeLovMap = evpLovService.getModeLovMap();
+			Map<String, Long> tagLovMap = evpLovService.getTagLovMap();
+			Map<Long, String> lovMapWithIdKey = CommonUtils.getLovMapWithIdKey(locationLovMap);
+			Map<Long, String> lovMapWithIdKey2 = CommonUtils.getLovMapWithIdKey(themeLovMap);
+			Map<Long, String> lovMapWithIdKey3 = CommonUtils.getLovMapWithIdKey(modeLovMap);
+			Map<Long, String> lovMapWithIdKey4 = CommonUtils.getLovMapWithIdKey(tagLovMap);
+
+			Sort sort = Sort.by(Sort.Direction.DESC, "createdOn");
+			List<Activity> activities = (List<Activity>) activityRepository.findAll(sort);
+			Map<String, List<Long>> activityLocationMap = getActivityLocationMap(activities);
+			LocalDate currentDate = LocalDate.now();
+			List<Activity> pastActivities = activities.stream().filter(activity -> activity.isPublished())
+					.filter(activity -> activity.getEndDate().toLocalDate().compareTo(currentDate) < 0)
+					.collect(Collectors.toList());
+
+			List<String> allLocations = new ArrayList<>(locationLovMap.keySet());
+
+			List<CreateOrUpdateActivityDTO> activityList = CommonUtils.convertActivitiesListToDTO(lovMapWithIdKey,
+					lovMapWithIdKey2, lovMapWithIdKey3, lovMapWithIdKey4, pastActivities, activityLocationMap);
+
+			Map<String, List<CreateOrUpdateActivityDTO>> locationWiseActivityMap = createLocationWiseActivityMap(
+					activityList, allLocations);
+
+			nameIdMap=getActivityNameAndId(locationWiseActivityMap);
+			
+			for (Map.Entry<String, List<String>> entry : nameIdMap.entrySet()) {
+				
+				Optional<SelectedActivity> sel=selectedActivityRepo.findByLocation(entry.getKey());
+				if(sel.isPresent()) {
+		            LocationActivityDTO locationActivityDto = new LocationActivityDTO(entry.getKey(),
+		            			entry.getValue(),
+		            				sel.get().getNameAndId());
+		            locationActivity.add(locationActivityDto);
+				}else {
+		            LocationActivityDTO locationActivityDto = new LocationActivityDTO(entry.getKey(),
+	            			entry.getValue(),
+	            				"Unselected");
+	            locationActivity.add(locationActivityDto);
+				}
+	        }
+			
+			
+
+		} catch (Exception e) {
+
+		}
+		return locationActivity;
+
+	}
+
+	public Map<String, List<String>> getActivityNameAndId(Map<String, List<CreateOrUpdateActivityDTO>> activities) {
+		Map<String, List<String>> nameIdMap = new HashMap<>();
+		try {
+			activities.forEach((key, values) -> {
+				values.forEach(activity -> {
+					String nameAndId;
+					nameAndId = activity.getActivityId() + " - " + activity.getActivityName();
+					if (nameIdMap.containsKey(key)) {
+						List<String> val = nameIdMap.get(key);
+						val.add(nameAndId);
+					} else {
+						List<String> val = new ArrayList<>();
+						val.add(nameAndId);
+						nameIdMap.put(key, val);
+					}
+				});
+			});
+		} catch (Exception e) {
+			log.error("Error while getting Key Value");
+		}
+		return nameIdMap;
+	}
+
+	@Override       // To update activity selection
+	public SelectedActivity setAvtivityIdAndName(String location, String nameId) {
+			
+		SelectedActivity activitySelected=new SelectedActivity();
+		try {
+			String username = CommonUtils.getUsername(request, jwtUtil);
+			String employeeId = CommonUtils.getEmployeeIdFromUsername(username);
+			Optional<Employee> employee = employeeRepository.findByEmployeeId(employeeId);
+			String employeeName = employee.isPresent() ? employee.get().getEmployeeName() : "";
+			
+			Optional<SelectedActivity> existing=selectedActivityRepo.findByLocation(location);
+			if(existing.isEmpty()){
+				activitySelected.setLocation(location);	
+				activitySelected.setNameAndId(nameId);
+			}else {
+				activitySelected=existing.get();
+				activitySelected.setNameAndId(nameId);
+			}
+			
+			activitySelected.setUpdatedBy(employeeName);
+			selectedActivityRepo.save(activitySelected);
+		}catch(Exception e){
+			log.error(e.getMessage());
+		}
+		return activitySelected;
+	}
+
+	@Override
+	public List<SelectedActivity> getActivityConfig() {
+		List<SelectedActivity> allActivities= new ArrayList<>();	
+		try {
+		
+			allActivities=(List<SelectedActivity>) selectedActivityRepo.findAll();
+		
+		}catch(Exception e) {
+			log.error(e.getMessage());
+		}
+			return allActivities;	
+		}
+
+	@Override
+	public void deleteActivityConfig(String location) {
+
+		try {
+			Optional<SelectedActivity> activity=selectedActivityRepo.findByLocation(location);
+			if(activity.isPresent()) {	
+				selectedActivityRepo.delete(activity.get());
+			}
+		}catch(Exception e)
+		{
+			log.error(e.getMessage());
+		}
+		
 	}
 
 }

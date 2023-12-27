@@ -20,4 +20,7 @@ public class Video extends AbstractEntity{
 	@Column(name="UPLOADED_BY")
 	private String uploadedBy;
 	
+	@Column(name="INDEX_COLUMN")
+	private Long index;
+	
 }

@@ -1152,21 +1152,30 @@ public class UploadServiceImpl implements UploadService {
 	}
 
 	@Override
-	public List<String> uploadImagesToBanner(MultipartFile[] multipartRequests) throws EvpException {
+	public List<String> uploadImagesToBanner(MultipartFile[] multipartRequests,Long index) throws EvpException {
 		try {
 
+			
+			List<BannerPicture> allData=(List<BannerPicture>) bannerPictureRepo.findAll();
+			List<Long> indexes=allData.stream().map(BannerPicture::getIndex)
+					.collect(Collectors.toList());
+			
+			checkForIndexDuplicates(index,indexes);
+			
 			MultiValueMap<String, Object> imageMap = new LinkedMultiValueMap<String, Object>();
 			StringBuilder urlBuilder = new StringBuilder();
 			String url = urlBuilder.append(imageStorageUrl).append(apikey).toString();
 
 			List<UploadResponse> uploadResponses = new LinkedList<>();
 			List<BannerPicture> bannerPictures = new LinkedList<>();
+			
+			
 
 			log.info("Uploading Files To Azure Storage");
 			List<String> fileNames = uploadBannerFileToAzureStorage(multipartRequests, imageMap, url, parentFolder,
 					uploadResponses);
 
-			buildBannerPictures(uploadResponses, bannerPictures, fileNames);
+			buildBannerPictures(uploadResponses, bannerPictures, fileNames,index);
 
 			log.info("Saving Activity Pictures");
 			bannerPictureRepo.saveAll(bannerPictures);
@@ -1263,7 +1272,7 @@ public class UploadServiceImpl implements UploadService {
 	}
 
 	private void buildBannerPictures(List<UploadResponse> uploadResponses, List<BannerPicture> bannerPictures,
-			List<String> fileNames) throws EvpException {
+			List<String> fileNames,long index) throws EvpException {
 
 		try {
 
@@ -1281,7 +1290,7 @@ public class UploadServiceImpl implements UploadService {
 					String fileName = fileNames.get(count);
 					count++;
 					bannerPicture.setImageName(fileName);
-
+                    bannerPicture.setIndex(index);
 					bannerPicture.setUploadedBy(employeeName);
 					bannerPicture.setContainerLocation(uploadResponse.getFileLocation());
 					bannerPictures.add(bannerPicture);
@@ -1341,14 +1350,36 @@ public class UploadServiceImpl implements UploadService {
 		}
 
 	}
+	
+	private void checkForIndexDuplicates(Long index, List<Long> allindexs) throws EvpException {
+
+		int flag = 0;
+		for (Long ind : allindexs) {
+	        if (index.equals(ind)) {  
+	            flag = 1;
+	            break;  
+	        }
+	    }
+		
+		if (flag == 1) {
+			throw new EvpException("Sequenec already occupied. Please enter another sequence");
+		}
+
+	}
 
 	@Override
 	public Leaders uploadDataToLeadersTalk(MultipartFile[] multipartRequests, String leaderName, String designation,
-			String description) throws EvpException {
+			String description,long index) throws EvpException {
 		try {
 			if (multipartRequests.length > 1) {
 				throw new EvpException("Please upload one image for a Leader.");
 			}
+			
+			List<Leaders> allLeaders=(List<Leaders>) leadersRepo.findAll();
+			List<Long> indexes=allLeaders.stream().map(Leaders::getIndex)
+					.collect(Collectors.toList());
+			
+			checkForIndexDuplicates(index,indexes);
 
 			MultiValueMap<String, Object> imageMap = new LinkedMultiValueMap<String, Object>();
 			StringBuilder urlBuilder = new StringBuilder();
@@ -1361,7 +1392,7 @@ public class UploadServiceImpl implements UploadService {
 			String fileName = uploadLeadersImageToAzureStorage(multipartRequests, leaderName, designation, description,
 					imageMap, url, parentFolder, uploadResponses);
 
-			buildLeaderData(uploadResponses, leaderName, designation, description, leaders, fileName);
+			buildLeaderData(uploadResponses, leaderName, designation, description, leaders, fileName,index);
 
 			Leaders leader = leaders.get(0);
 
@@ -1460,7 +1491,7 @@ public class UploadServiceImpl implements UploadService {
 	}
 
 	private void buildLeaderData(List<UploadResponse> uploadResponses, String leadersName, String designation,
-			String description, List<Leaders> leaders, String fileName) throws EvpException {
+			String description, List<Leaders> leaders, String fileName,Long index) throws EvpException {
 
 		try {
 
@@ -1481,6 +1512,7 @@ public class UploadServiceImpl implements UploadService {
 				leader.setDescription(description);
 				leader.setUploadedBy(employeeName);
 				leader.setContainerLocation(uploadResponse.getFileLocation());
+				leader.setIndex(index);
 				leaders.add(leader);
 			}
 
@@ -1493,8 +1525,15 @@ public class UploadServiceImpl implements UploadService {
 
 
 	@Override
-	public List<String> uploadPartnersLogo(MultipartFile[] multipartRequests) throws EvpException {
+	public List<String> uploadPartnersLogo(MultipartFile[] multipartRequests,Long index) throws EvpException {
 		try {
+			
+			
+			List<PartnersLogo> allData=(List<PartnersLogo>) partnersLogoRepo.findAll();
+			List<Long> indexes=allData.stream().map(PartnersLogo::getIndex)
+					.collect(Collectors.toList());
+			
+			checkForIndexDuplicates(index,indexes);
 
 			MultiValueMap<String, Object> imageMap = new LinkedMultiValueMap<String, Object>();
 			StringBuilder urlBuilder = new StringBuilder();
@@ -1507,7 +1546,7 @@ public class UploadServiceImpl implements UploadService {
 			List<String> fileNames = uploadPartnersLogoToAzureStorage(multipartRequests, imageMap, url, parentFolder,
 					uploadResponses);
 
-			buildPartnersLogo(uploadResponses, partnersLogo, fileNames);
+			buildPartnersLogo(uploadResponses, partnersLogo, fileNames,index);
 
 			log.info("Saving Partners Logo");
 			partnersLogoRepo.saveAll(partnersLogo);
@@ -1605,7 +1644,7 @@ public class UploadServiceImpl implements UploadService {
 	}
 
 	private void buildPartnersLogo(List<UploadResponse> uploadResponses, List<PartnersLogo> partnersLogos,
-			List<String> fileNames) throws EvpException {
+			List<String> fileNames,Long index) throws EvpException {
 
 		try {
 
@@ -1626,6 +1665,7 @@ public class UploadServiceImpl implements UploadService {
 
 					partnersLogo.setUploadedBy(employeeName);
 					partnersLogo.setContainerLocation(uploadResponse.getFileLocation());
+					partnersLogo.setIndex(index);
 					partnersLogos.add(partnersLogo);
 				}
 			}
@@ -1645,12 +1685,19 @@ public class UploadServiceImpl implements UploadService {
 
 	@Override
 	public TestimonialData uploadDataToTestimonial(MultipartFile[] multipartRequests, String testimonialName,
-			String designationAndLocation, String description) throws EvpException {
+			String designationAndLocation, String description,Long index) throws EvpException {
 		try {
 			if (multipartRequests.length > 1) {
 				throw new EvpException("Please upload one image for a Testimonial.");
 			}
 
+			
+			List<TestimonialData> allData=(List<TestimonialData>) testimonialDataRepo.findAll();
+			List<Long> indexes=allData.stream().map(TestimonialData::getIndex)
+					.collect(Collectors.toList());
+			
+			checkForIndexDuplicates(index,indexes);
+			
 			MultiValueMap<String, Object> imageMap = new LinkedMultiValueMap<String, Object>();
 			StringBuilder urlBuilder = new StringBuilder();
 			String url = urlBuilder.append(imageStorageUrl).append(apikey).toString();
@@ -1663,7 +1710,7 @@ public class UploadServiceImpl implements UploadService {
 					designationAndLocation, description, imageMap, url, parentFolder, uploadResponses);
 
 			buildTestimonialData(uploadResponses, testimonialName, designationAndLocation, description,
-					testimonialDatas, fileName);
+					testimonialDatas, fileName,index);
 
 			TestimonialData testimonialData = testimonialDatas.get(0);
 
@@ -1759,7 +1806,8 @@ public class UploadServiceImpl implements UploadService {
 	}
 
 	private void buildTestimonialData(List<UploadResponse> uploadResponses, String testimonialName,
-			String designationAndLocation, String description, List<TestimonialData> testimonialDatas, String fileName)
+			String designationAndLocation, String description, List<TestimonialData> testimonialDatas, String fileName,
+			Long index)
 			throws EvpException {
 
 		try {
@@ -1781,6 +1829,7 @@ public class UploadServiceImpl implements UploadService {
 				testimonialData.setDescription(description);
 				testimonialData.setUploadedBy(employeeName);
 				testimonialData.setContainerLocation(uploadResponse.getFileLocation());
+				testimonialData.setIndex(index);
 				testimonialDatas.add(testimonialData);
 			}
 
@@ -1793,7 +1842,7 @@ public class UploadServiceImpl implements UploadService {
 
 
 	@Override
-	public Video uploadVideo(String videoURL, String videoName) throws EvpException {
+	public Video uploadVideo(String videoURL, String videoName,Long index) throws EvpException {
 
 		try {
 			List<Video> allVideo=(List<Video>) videoRepo.findAll();
@@ -1801,11 +1850,17 @@ public class UploadServiceImpl implements UploadService {
 					.collect(Collectors.toList());
 			
 			checkForVideoDuplicates(videoURL,urls);
+			
+			List<Video> allData=(List<Video>) videoRepo.findAll();
+			List<Long> indexes=allData.stream().map(Video::getIndex)
+					.collect(Collectors.toList());
+			
+			checkForIndexDuplicates(index,indexes);
 
 			List<UploadResponse> uploadResponses = new LinkedList<>();
 			List<Video> videos = new LinkedList<>();
 
-			buildVideo(uploadResponses, videos, videoURL,videoName);
+			buildVideo(uploadResponses, videos, videoURL,videoName,index);
 
 			Video video = videos.get(0);
 
@@ -1827,7 +1882,8 @@ public class UploadServiceImpl implements UploadService {
 
 	}
 	
-	private void buildVideo(List<UploadResponse> uploadResponses, List<Video> videos,String videoURL, String videoName)
+	private void buildVideo(List<UploadResponse> uploadResponses, List<Video> videos,String videoURL, String videoName
+			,Long index)
 			throws EvpException {
 
 		try {
@@ -1841,6 +1897,7 @@ public class UploadServiceImpl implements UploadService {
 			video.setVideoName(videoName);
 			video.setVideoURL(videoURL);
 			video.setUploadedBy(employeeName);
+			video.setIndex(index);
 			videos.add(video);
 
 		} catch (Exception e) {
@@ -1850,8 +1907,14 @@ public class UploadServiceImpl implements UploadService {
 	}
 
 	@Override
-	public VoiceOfChange uploadFilesToVOC(MultipartFile[] multipartRequests, String speaksType, String personName, String designationOrInfo) throws EvpException {
+	public VoiceOfChange uploadFilesToVOC(MultipartFile[] multipartRequests, String speaksType, String personName, String designationOrInfo,Long index) throws EvpException {
 		try {
+			
+			List<VoiceOfChange> allData=(List<VoiceOfChange>) vocRepo.findAll();
+			List<Long> indexes=allData.stream().map(VoiceOfChange::getIndex)
+					.collect(Collectors.toList());
+			
+			checkForIndexDuplicates(index,indexes);
 
 			MultiValueMap<String, Object> imageMap = new LinkedMultiValueMap<String, Object>();
 			StringBuilder urlBuilder = new StringBuilder();
@@ -1864,7 +1927,7 @@ public class UploadServiceImpl implements UploadService {
 			List<String> fileNames = uploadVOCFilesToAzure(multipartRequests, imageMap, url, parentFolder,
 					uploadResponses);
 
-			buildVOCData(uploadResponses, vocData, fileNames, speaksType, personName,designationOrInfo);
+			buildVOCData(uploadResponses, vocData, fileNames, speaksType, personName,designationOrInfo,index);
 
 			log.info("Saving Voice of Change Data");
 			vocRepo.save(vocData);
@@ -1995,7 +2058,7 @@ public class UploadServiceImpl implements UploadService {
 	}
 	
 	private void buildVOCData(List<UploadResponse> uploadResponses,VoiceOfChange vocData,
-			List<String> fileNames,String speaksType, String personName, String designationOrInfo) throws EvpException {
+			List<String> fileNames,String speaksType, String personName, String designationOrInfo,Long index) throws EvpException {
 
 		try {
 
@@ -2008,6 +2071,7 @@ public class UploadServiceImpl implements UploadService {
 			vocData.setPersonName(personName);
 			vocData.setSpeaksType(speaksType);	
 			vocData.setUploadedBy(employeeName);
+			vocData.setIndex(index);
 
 			List<String> containerLocations=new ArrayList<>();
 			for (UploadResponse uploadResponse : uploadResponses) {
@@ -2043,12 +2107,12 @@ public class UploadServiceImpl implements UploadService {
 	@Override
 	public Map<String, Object> commonGetForLandingPge() throws EvpException {
 		Map<String, Object> dataMap=new HashMap<>();
-		dataMap.put("banner", bannerPictureRepo.findAll());
-		dataMap.put("leadersTalk", leadersRepo.findAll());
-		dataMap.put("voiceOfChange", vocRepo.findAll());
-		dataMap.put("video", videoRepo.findAll());
-		dataMap.put("testimonial", testimonialDataRepo.findAll());
-		dataMap.put("partners", partnersLogoRepo.findAll());
+		dataMap.put("banner", bannerPictureRepo.findAllByOrderByIndex());
+		dataMap.put("leadersTalk", leadersRepo.findAllByOrderByIndex());
+		dataMap.put("voiceOfChange", vocRepo.findAllByOrderByIndex());
+		dataMap.put("video", videoRepo.findAllByOrderByIndex());
+		dataMap.put("testimonial", testimonialDataRepo.findAllByOrderByIndex());
+		dataMap.put("partners", partnersLogoRepo.findAllByOrderByIndex());
 		return dataMap;
 	}
 	@Override

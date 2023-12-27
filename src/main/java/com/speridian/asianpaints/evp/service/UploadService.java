@@ -39,22 +39,22 @@ public interface UploadService {
 	
 	public Map<String, String> getActivityMap(List<ActivityPicture> activityPictures) ;
 	
-	public List<String> uploadImagesToBanner(MultipartFile[] multipartRequests) throws EvpException;
+	public List<String> uploadImagesToBanner(MultipartFile[] multipartRequests,Long index) throws EvpException;
 	
-	public Leaders uploadDataToLeadersTalk(MultipartFile[] multipartRequests, String leaderName, String designation, String description) throws EvpException;
+	public Leaders uploadDataToLeadersTalk(MultipartFile[] multipartRequests, String leaderName, String designation, String description,long index) throws EvpException;
 
 	
-    public List<String> uploadPartnersLogo(MultipartFile[] multipartRequests) throws EvpException;
+    public List<String> uploadPartnersLogo(MultipartFile[] multipartRequests,Long index) throws EvpException;
 	
 	
-	public TestimonialData uploadDataToTestimonial(MultipartFile[] multipartRequests, String testimonialName, String designationAndLocation, String description) throws EvpException;
+	public TestimonialData uploadDataToTestimonial(MultipartFile[] multipartRequests, String testimonialName, String designationAndLocation, String description,Long index) throws EvpException;
 
 	
-	public Video uploadVideo(String videoURL,String videoName) throws EvpException;
+	public Video uploadVideo(String videoURL,String videoName,Long index) throws EvpException;
 		
 
 	public VoiceOfChange uploadFilesToVOC(MultipartFile[] multipartRequests, String speaksType, String personName,
-			String designationOrInfo) throws EvpException;
+			String designationOrInfo,Long index) throws EvpException;
 
 	public Map<String, Object> commonGetForLandingPge() throws EvpException; 
 	

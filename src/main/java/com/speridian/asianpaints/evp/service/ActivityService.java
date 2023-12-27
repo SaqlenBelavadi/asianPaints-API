@@ -11,10 +11,12 @@ import com.speridian.asianpaints.evp.dto.ActivityTagResponse;
 import com.speridian.asianpaints.evp.dto.CreateOrUpdateActivityDTO;
 import com.speridian.asianpaints.evp.dto.EmployeeActivityResponseDTO;
 import com.speridian.asianpaints.evp.dto.GalleryResponseDTO;
+import com.speridian.asianpaints.evp.dto.LocationActivityDTO;
 import com.speridian.asianpaints.evp.dto.PastActivities;
 import com.speridian.asianpaints.evp.dto.SearchCriteria;
 import com.speridian.asianpaints.evp.entity.Activity;
 import com.speridian.asianpaints.evp.entity.EmployeeActivityHistory;
+import com.speridian.asianpaints.evp.entity.SelectedActivity;
 import com.speridian.asianpaints.evp.exception.EvpException;
 
 public interface ActivityService {
@@ -69,4 +71,12 @@ public interface ActivityService {
 			throws EvpException;
 
 	public List<CreateOrUpdateActivityDTO> getLocationWisePastActivities() throws EvpException;
+	
+	public List<LocationActivityDTO> getLocationActivitiesForConfig() throws Exception;
+	
+	public SelectedActivity setAvtivityIdAndName(String location, String nameId);
+	
+	public List<SelectedActivity> getActivityConfig();
+	
+	public void deleteActivityConfig(String activityNameId);
 }

@@ -15,7 +15,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.speridian.asianpaints.evp.dto.CreateOrUpdateActivityDTO;
 import com.speridian.asianpaints.evp.dto.GenericResponse;
+import com.speridian.asianpaints.evp.dto.LocationActivityDTO;
 import com.speridian.asianpaints.evp.entity.Leaders;
+import com.speridian.asianpaints.evp.entity.SelectedActivity;
 import com.speridian.asianpaints.evp.entity.TestimonialData;
 import com.speridian.asianpaints.evp.entity.Video;
 import com.speridian.asianpaints.evp.entity.VoiceOfChange;
@@ -32,13 +34,15 @@ public class LandingPageController {
 	
 	@Autowired
 	private ActivityService activityService;
+	
 	@PostMapping("/Upload/Images/Banner")
-	public ResponseEntity<GenericResponse> uploadPicture(@RequestParam("images") MultipartFile[] images) {
+	public ResponseEntity<GenericResponse> uploadPicture(@RequestParam("images") MultipartFile[] images,
+			@RequestParam("index") Long index) {
 		GenericResponse genericResponse = GenericResponse.builder().build();
 		ResponseEntity<GenericResponse> responseEntity = null;
 					
 		try {
-			List<String> fileNames = uploadService.uploadImagesToBanner(images);
+			List<String> fileNames = uploadService.uploadImagesToBanner(images,index);
 			genericResponse.setData(fileNames);
 			genericResponse.setMessage("Successfully Uploaded");
 			return ResponseEntity.ok(genericResponse);
@@ -67,13 +71,13 @@ public class LandingPageController {
 	public ResponseEntity<GenericResponse> uploadLeadersTalk(@RequestParam("images") MultipartFile[] images,
 			@RequestParam("leaderName") String leaderName,
 				@RequestParam("designation") String designation,
-					@RequestParam("description") String description) {
+					@RequestParam("description") String description, @RequestParam("index") Long index) {
 		
 		GenericResponse genericResponse = GenericResponse.builder().build();
 		ResponseEntity<GenericResponse> responseEntity = null;
 					
 		try {
-			Leaders leader = uploadService.uploadDataToLeadersTalk(images, leaderName, designation, description);
+			Leaders leader = uploadService.uploadDataToLeadersTalk(images, leaderName, designation, description,index);
 			genericResponse.setData(leader);
 			genericResponse.setMessage("Successfully Uploaded");
 			return ResponseEntity.ok(genericResponse);
@@ -99,12 +103,13 @@ public class LandingPageController {
 //	}
 	
 	@PostMapping("/Upload/Logo/Partner")
-	public ResponseEntity<GenericResponse> uploadPartnersLogo(@RequestParam("images") MultipartFile[] images) {
+	public ResponseEntity<GenericResponse> uploadPartnersLogo(@RequestParam("images") MultipartFile[] images,
+			@RequestParam("index") Long index) {
 		GenericResponse genericResponse = GenericResponse.builder().build();
 		ResponseEntity<GenericResponse> responseEntity = null;
 					
 		try {
-			List<String> fileNames = uploadService.uploadPartnersLogo(images);
+			List<String> fileNames = uploadService.uploadPartnersLogo(images,index);
 			genericResponse.setData(fileNames);
 			genericResponse.setMessage("Successfully Uploaded");
 			return ResponseEntity.ok(genericResponse);
@@ -133,13 +138,14 @@ public class LandingPageController {
 	public ResponseEntity<GenericResponse> uploadTestimonialData(@RequestParam("images") MultipartFile[] images,
 			@RequestParam("testimonialName") String testimonialName,
 				@RequestParam("designationAndLocation") String designationAndLocation,
-					@RequestParam("description") String description) {
+					@RequestParam("description") String description,
+					@RequestParam("index") Long index) {
 		
 		GenericResponse genericResponse = GenericResponse.builder().build();
 		ResponseEntity<GenericResponse> responseEntity = null;
 					
 		try {
-			TestimonialData testimonialData = uploadService.uploadDataToTestimonial(images, testimonialName, designationAndLocation, description);
+			TestimonialData testimonialData = uploadService.uploadDataToTestimonial(images, testimonialName, designationAndLocation, description,index);
 			genericResponse.setData(testimonialData);
 			genericResponse.setMessage("Successfully Uploaded");
 			return ResponseEntity.ok(genericResponse);
@@ -166,12 +172,12 @@ public class LandingPageController {
 	
 	@PostMapping("/Upload/Video")
 	public ResponseEntity<GenericResponse> uploadVideos(@RequestParam("videoURL") String videoURL,
-			@RequestParam("videoName") String videoName) {
+			@RequestParam("videoName") String videoName,@RequestParam("index")Long index) {
 		GenericResponse genericResponse = GenericResponse.builder().build();
 		ResponseEntity<GenericResponse> responseEntity = null;
 					
 		try {
-			Video videoData = uploadService.uploadVideo(videoURL,videoName);
+			Video videoData = uploadService.uploadVideo(videoURL,videoName,index);
 			genericResponse.setData(videoData);
 			genericResponse.setMessage("Successfully Uploaded");
 			return ResponseEntity.ok(genericResponse);
@@ -198,12 +204,13 @@ public class LandingPageController {
 	
 	@PostMapping("/Upload/VoiceOfChange")
 	public ResponseEntity<GenericResponse> uploadVOC(@RequestParam("imageAndAudio") MultipartFile[] multipartRequests,
-				@RequestParam("speaksType") String speaksType,@RequestParam("personName") String personName,@RequestParam("designationOrInfo") String designationOrInfo) {
+				@RequestParam("speaksType") String speaksType,@RequestParam("personName") String personName,
+				@RequestParam("designationOrInfo") String designationOrInfo,@RequestParam("index") Long index) {
 		GenericResponse genericResponse = GenericResponse.builder().build();
 		ResponseEntity<GenericResponse> responseEntity = null;
 					
 		try {
-			VoiceOfChange vocData = uploadService.uploadFilesToVOC(multipartRequests, speaksType,personName,designationOrInfo);
+			VoiceOfChange vocData = uploadService.uploadFilesToVOC(multipartRequests, speaksType,personName,designationOrInfo,index);
 			genericResponse.setData(vocData);
 			genericResponse.setMessage("Successfully Uploaded");
 			return ResponseEntity.ok(genericResponse);
@@ -341,4 +348,37 @@ public class LandingPageController {
 		}
 		return responseEntity;
 	}
+	
+	@GetMapping("/LocationWise/ActivityNameId")
+	public ResponseEntity<GenericResponse> getActivitiesLocationWIse(){
+		GenericResponse genericResponse = GenericResponse.builder().build();
+		ResponseEntity<GenericResponse> responseEntity = null;
+		try {
+			List<LocationActivityDTO> activityNameId = activityService.getLocationActivitiesForConfig();
+			genericResponse.setData(activityNameId);
+			responseEntity = ResponseEntity.ok(genericResponse);
+		} catch (Exception e) {
+			genericResponse.setMessage(e.getMessage());
+			responseEntity = ResponseEntity.internalServerError().body(genericResponse);
+		}
+		return responseEntity;
+	}
+	
+	@PostMapping("/Upload/ActivityConfig")
+	public ResponseEntity<GenericResponse> updateActivityConfig(@RequestParam("location") String location,
+				@RequestParam("nameId") String nameId){
+		GenericResponse genericResponse = GenericResponse.builder().build();
+		ResponseEntity<GenericResponse> responseEntity = null;		
+		try {
+			SelectedActivity selectedActivity=activityService.setAvtivityIdAndName(location,nameId);
+			genericResponse.setData(selectedActivity);
+			genericResponse.setMessage("");
+			responseEntity = ResponseEntity.ok(genericResponse);
+		}catch(Exception e) {
+			genericResponse.setMessage(e.getMessage());
+			responseEntity = ResponseEntity.internalServerError().body(genericResponse);
+		}
+		return responseEntity;	
+	}
+	
 }
