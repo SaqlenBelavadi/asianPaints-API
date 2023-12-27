@@ -289,9 +289,6 @@ public class LoginServiceImpl implements LoginService {
 			participationHours.forEach(p->{
 				Integer hours=Integer.parseInt(p.split(" ")[0]);
 				Integer minutes=Integer.parseInt(p.split(" ")[2]);
-// 				To Identify issue
-				Integer nothing=Integer.parseInt(p.split(" ")[4]);
-				System.out.println(nothing);
 				h.addAndGet(hours);
 				m.addAndGet(minutes);
 				if(m.get()>=60) {
