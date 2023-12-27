@@ -2,7 +2,19 @@ package com.speridian.asianpaints.evp.controller;
 
 import java.io.IOException;
 
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -42,5 +54,20 @@ public class DownloadCsvController {
 			throw new RuntimeException("Unable to export CSV data");
 		}
 	}
+	
+    @GetMapping("/downloadPdf")
+    public ResponseEntity<Resource> downloadPdf() throws IOException {
+        // Logic to read the PDF file
+        Resource pdfFile = new ClassPathResource("evp.pdf");
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=Resume.pdf");
+
+        return ResponseEntity.ok()
+                .headers(headers)
+                .contentLength(pdfFile.contentLength())
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(pdfFile);
+    }
 
 }
