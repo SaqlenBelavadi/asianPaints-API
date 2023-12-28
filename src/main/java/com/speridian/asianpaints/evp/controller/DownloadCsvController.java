@@ -61,7 +61,7 @@ public class DownloadCsvController {
         Resource pdfFile = new ClassPathResource("evp.pdf");
 
         HttpHeaders headers = new HttpHeaders();
-        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=Resume.pdf");
+        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=Evp guidelines for Employees.pdf");
 
         return ResponseEntity.ok()
                 .headers(headers)
