@@ -2726,7 +2726,7 @@ public class ActivityServiceImpl implements ActivityService {
 			String employeeName = employee.isPresent() ? employee.get().getEmployeeName() : "";
 			
 			Optional<SelectedActivity> existing=selectedActivityRepo.findByLocation(location);
-			if(existing.isEmpty()){
+			if(!existing.isPresent()){
 				activitySelected.setLocation(location);	
 				activitySelected.setNameAndId(nameId);
 			}else {
