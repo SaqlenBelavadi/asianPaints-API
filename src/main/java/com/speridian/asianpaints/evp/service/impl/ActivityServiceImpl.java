@@ -2509,7 +2509,10 @@ public class ActivityServiceImpl implements ActivityService {
         	.forEach(pS -> {
         		 String activityId=pS.getNameAndId().split(" - ")[0];
         		 Optional<Activity> activity=activityRepository.findByActivityId(activityId);
-        		 activityList.add(activity.get());
+        		 if(activity.isPresent()) {
+        		 	activityList.add(activity.get());
+        		 }
+        		 
         });
         Map<String, List<Long>> activityLocationMap = getActivityLocationMap(activityList);
         List<CreateOrUpdateActivityDTO> activities = CommonUtils.convertActivitiesListToDTO(lovMapWithIdKey,
@@ -2666,7 +2669,6 @@ public class ActivityServiceImpl implements ActivityService {
 					activityList, allLocations);
 
 			nameIdMap=getActivityNameAndId(locationWiseActivityMap);
-			
 			for (Map.Entry<String, List<String>> entry : nameIdMap.entrySet()) {
 				
 				Optional<SelectedActivity> sel=selectedActivityRepo.findByLocation(entry.getKey());
@@ -2697,13 +2699,17 @@ public class ActivityServiceImpl implements ActivityService {
 		try {
 			activities.forEach((key, values) -> {
 				values.forEach(activity -> {
+					List<String> val=new ArrayList<>();
 					String nameAndId;
 					nameAndId = activity.getActivityId() + " - " + activity.getActivityName();
 					if (nameIdMap.containsKey(key)) {
-						List<String> val = nameIdMap.get(key);
+						val = nameIdMap.get(key);
 						val.add(nameAndId);
 					} else {
-						List<String> val = new ArrayList<>();
+						val = new ArrayList<>();
+						if(!nameIdMap.containsKey("Unselected")) {
+							val.add("Unselected");
+						}
 						val.add(nameAndId);
 						nameIdMap.put(key, val);
 					}
