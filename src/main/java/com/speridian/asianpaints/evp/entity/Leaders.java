@@ -11,11 +11,6 @@ import lombok.Data;
 @Table(name = "EVP_LEADERS_TALK")
 public class Leaders extends AbstractEntity{
 
-	@Column(name="LEADERS_PICTURE_LOCATION")
-	private String leaderPictureLocation;
-	
-	@Column(name="IMAGE_NAME")
-	private String imageName;
 	
 	@Column(name="LEADER_NAME")
 	private String leaderName;
@@ -23,13 +18,10 @@ public class Leaders extends AbstractEntity{
 	@Column(name="DESIGNATION")
 	private String designation;
 	
-	@Column(name="DESCRIPTION")
-	private String description;
+	@Column(name="VIDEO_URL")
+	private String url;
 	
-	@Column(name="CONTAINER_LOCATION")
-	private String containerLocation;
-	
-	@Column(name="UPLOADED_BY")
+	@Column(name="UPDATED_BY")
 	private String uploadedBy;
 	
 	@Column(name="INDEX_COLUMN")

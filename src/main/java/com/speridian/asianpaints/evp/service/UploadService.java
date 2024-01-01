@@ -41,7 +41,7 @@ public interface UploadService {
 	
 	public List<String> uploadImagesToBanner(MultipartFile[] multipartRequests,Long index) throws EvpException;
 	
-	public Leaders uploadDataToLeadersTalk(MultipartFile[] multipartRequests, String leaderName, String designation, String description,long index) throws EvpException;
+	public Leaders uploadDataToLeadersTalk(String leaderName, String designation, String description,long index) throws EvpException;
 
 	
     public List<String> uploadPartnersLogo(MultipartFile[] multipartRequests,Long index) throws EvpException;

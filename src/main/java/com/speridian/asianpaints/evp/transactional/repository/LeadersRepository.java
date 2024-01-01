@@ -12,8 +12,8 @@ import com.speridian.asianpaints.evp.entity.Leaders;
 
 public interface LeadersRepository extends PagingAndSortingRepository<Leaders, Long> , JpaSpecificationExecutor<Leaders> {
 
-	 @Query("SELECT b FROM Leaders b WHERE b.imageName = :imageName")
-	    Optional<Leaders> findByLeaderImageName(@Param("imageName") String imageName);
+	 @Query("SELECT b FROM Leaders b WHERE b.url = :imageName")
+	    Optional<Leaders> findByLeaderImageName(@Param("imageName") String url);
 	 
 	 List<Leaders> findAllByOrderByIndex();
 }

@@ -68,16 +68,16 @@ public class LandingPageController {
 //	}
 	
 	@PostMapping("/Upload/LeadersTalk")
-	public ResponseEntity<GenericResponse> uploadLeadersTalk(@RequestParam("images") MultipartFile[] images,
+	public ResponseEntity<GenericResponse> uploadLeadersTalk(
 			@RequestParam("leaderName") String leaderName,
 				@RequestParam("designation") String designation,
-					@RequestParam("description") String description, @RequestParam("index") Long index) {
+					@RequestParam("url") String url, @RequestParam("index") Long index) {
 		
 		GenericResponse genericResponse = GenericResponse.builder().build();
 		ResponseEntity<GenericResponse> responseEntity = null;
 					
 		try {
-			Leaders leader = uploadService.uploadDataToLeadersTalk(images, leaderName, designation, description,index);
+			Leaders leader = uploadService.uploadDataToLeadersTalk(leaderName, designation, url,index);
 			genericResponse.setData(leader);
 			genericResponse.setMessage("Successfully Uploaded");
 			return ResponseEntity.ok(genericResponse);

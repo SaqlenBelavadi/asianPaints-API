@@ -1352,7 +1352,7 @@ public class UploadServiceImpl implements UploadService {
 	}
 	
 	private void checkForIndexDuplicates(Long index, List<Long> allindexs) throws EvpException {
-
+		
 		int flag = 0;
 		for (Long ind : allindexs) {
 	        if (index.equals(ind)) {  
@@ -1368,36 +1368,33 @@ public class UploadServiceImpl implements UploadService {
 	}
 
 	@Override
-	public Leaders uploadDataToLeadersTalk(MultipartFile[] multipartRequests, String leaderName, String designation,
-			String description,long index) throws EvpException {
+	public Leaders uploadDataToLeadersTalk(String leaderName, String designation,
+			String url,long index) throws EvpException {
 		try {
-			if (multipartRequests.length > 1) {
-				throw new EvpException("Please upload one image for a Leader.");
-			}
-			
 			List<Leaders> allLeaders=(List<Leaders>) leadersRepo.findAll();
 			List<Long> indexes=allLeaders.stream().map(Leaders::getIndex)
 					.collect(Collectors.toList());
 			
+			List<String> allUrls=allLeaders.stream().map(Leaders::getUrl)
+					.collect(Collectors.toList());
+			
+			checkForVideoDuplicates(url, allUrls);
 			checkForIndexDuplicates(index,indexes);
-
-			MultiValueMap<String, Object> imageMap = new LinkedMultiValueMap<String, Object>();
-			StringBuilder urlBuilder = new StringBuilder();
-			String url = urlBuilder.append(imageStorageUrl).append(apikey).toString();
-
-			List<UploadResponse> uploadResponses = new LinkedList<>();
-			List<Leaders> leaders = new LinkedList<>();
-
-			log.info("Uploading Files To Azure Storage");
-			String fileName = uploadLeadersImageToAzureStorage(multipartRequests, leaderName, designation, description,
-					imageMap, url, parentFolder, uploadResponses);
-
-			buildLeaderData(uploadResponses, leaderName, designation, description, leaders, fileName,index);
-
-			Leaders leader = leaders.get(0);
-
+			Leaders leader = new Leaders();
+	
+			String username = CommonUtils.getUsername(request, jwtUtil);
+			String employeeId = CommonUtils.getEmployeeIdFromUsername(username);
+			Optional<Employee> employee = employeeRepository.findByEmployeeId(employeeId);
+			String employeeName = employee.isPresent() ? employee.get().getEmployeeName() : "";
+			
+			leader.setUploadedBy(employeeName);
+			leader.setIndex(index);
+			leader.setLeaderName(leaderName);
+			leader.setDesignation(designation);
+			leader.setUrl(url);
+				
 			log.info("Saving Leaders Data");
-			leadersRepo.saveAll(leaders);
+			leadersRepo.save(leader);
 
 			return leader;
 		} catch (HttpClientErrorException e) {
@@ -1413,70 +1410,70 @@ public class UploadServiceImpl implements UploadService {
 		}
 	}
 
-	private String uploadLeadersImageToAzureStorage(MultipartFile[] multipartRequests, String leaderName,
-			String designation, String description, MultiValueMap<String, Object> imageMap, String url,
-			String parentFolder2, List<UploadResponse> uploadResponses) throws EvpException {
-
-		LocalDate now = LocalDate.now();
-
-		String imageName = multipartRequests[0].getOriginalFilename();
-
-		try {
-			List<Leaders> allLeaders = (List<Leaders>) leadersRepo.findAll();
-
-			List<String> names = allLeaders.stream().map(Leaders::getImageName).collect(Collectors.toList());
-
-			checkForDuplicates(multipartRequests, names);
-
-			if (allLeaders.size() < 3) {
-				Arrays.stream(multipartRequests).forEach(multipartRequest -> {
-
-					String fileName = null;
-					HttpHeaders headers = new HttpHeaders();
-					headers.setContentType(MediaType.MULTIPART_FORM_DATA);
-
-					fileName = multipartRequest.getOriginalFilename();
-					File file = convert(multipartRequest);
-					if (Optional.ofNullable(file).isPresent()) {
-						imageMap.add("fileData", new FileSystemResource(file));
-						imageMap.add("fileContainer", "aplms");
-
-						String fileLocation = getLeaderImageLocation(parentFolder, now, fileName);
-
-						String fileL = fileLocation.substring(0, fileLocation.indexOf('.'));
-
-						imageMap.add("fileLoc", fileL);
-						HttpEntity<MultiValueMap<String, Object>> request = new HttpEntity<MultiValueMap<String, Object>>(
-								imageMap, headers);
-
-						RestTemplate restTemplate = CommonUtils.buildRestTemplate(false, null, null);
-						restTemplate.getMessageConverters().add(new FormHttpMessageConverter());
-						restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-						ResponseEntity<UploadResponse> responseEntity = restTemplate.exchange(url, HttpMethod.POST,
-								request, UploadResponse.class);
-
-						if (responseEntity.getStatusCode().equals(HttpStatus.OK)) {
-							log.info("Successfully Uploaded image {}", fileName);
-							UploadResponse uploadResponse = responseEntity.getBody();
-							uploadResponse.setFileLocation(fileLocation);
-							uploadResponses.add(uploadResponse);
-
-						}
-					} else {
-						log.error("Couldn't upload file with name {}", fileName);
-					}
-
-				});
-			} else {
-				log.error("Maximum size is 3 for leaders talk");
-				throw new EvpException("The maximum size of 3 has been reached.");
-			}
-		} catch (EvpException e) {
-			throw new EvpException(e.getMessage());
-
-		}
-		return imageName;
-	}
+//	private String uploadLeadersImageToAzureStorage(String leaderName,
+//			String designation, String description, MultiValueMap<String, Object> imageMap, String url,
+//			String parentFolder2, List<UploadResponse> uploadResponses) throws EvpException {
+//
+//		LocalDate now = LocalDate.now();
+//
+//		String imageName = multipartRequests[0].getOriginalFilename();
+//
+//		try {
+//			List<Leaders> allLeaders = (List<Leaders>) leadersRepo.findAll();
+//
+//			List<String> names = allLeaders.stream().map(Leaders::getImageName).collect(Collectors.toList());
+//
+//			checkForDuplicates(multipartRequests, names);
+//
+//			if (allLeaders.size() < 3) {
+//				Arrays.stream(multipartRequests).forEach(multipartRequest -> {
+//
+//					String fileName = null;
+//					HttpHeaders headers = new HttpHeaders();
+//					headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+//
+//					fileName = multipartRequest.getOriginalFilename();
+//					File file = convert(multipartRequest);
+//					if (Optional.ofNullable(file).isPresent()) {
+//						imageMap.add("fileData", new FileSystemResource(file));
+//						imageMap.add("fileContainer", "aplms");
+//
+//						String fileLocation = getLeaderImageLocation(parentFolder, now, fileName);
+//
+//						String fileL = fileLocation.substring(0, fileLocation.indexOf('.'));
+//
+//						imageMap.add("fileLoc", fileL);
+//						HttpEntity<MultiValueMap<String, Object>> request = new HttpEntity<MultiValueMap<String, Object>>(
+//								imageMap, headers);
+//
+//						RestTemplate restTemplate = CommonUtils.buildRestTemplate(false, null, null);
+//						restTemplate.getMessageConverters().add(new FormHttpMessageConverter());
+//						restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+//						ResponseEntity<UploadResponse> responseEntity = restTemplate.exchange(url, HttpMethod.POST,
+//								request, UploadResponse.class);
+//
+//						if (responseEntity.getStatusCode().equals(HttpStatus.OK)) {
+//							log.info("Successfully Uploaded image {}", fileName);
+//							UploadResponse uploadResponse = responseEntity.getBody();
+//							uploadResponse.setFileLocation(fileLocation);
+//							uploadResponses.add(uploadResponse);
+//
+//						}
+//					} else {
+//						log.error("Couldn't upload file with name {}", fileName);
+//					}
+//
+//				});
+//			} else {
+//				log.error("Maximum size is 3 for leaders talk");
+//				throw new EvpException("The maximum size of 3 has been reached.");
+//			}
+//		} catch (EvpException e) {
+//			throw new EvpException(e.getMessage());
+//
+//		}
+//		return imageName;
+//	}
 
 	private String getLeaderImageLocation(String parentFolder2, LocalDate now, String fileName) {
 		String fileLocation = null;
@@ -1490,38 +1487,37 @@ public class UploadServiceImpl implements UploadService {
 		return fileLocation;
 	}
 
-	private void buildLeaderData(List<UploadResponse> uploadResponses, String leadersName, String designation,
-			String description, List<Leaders> leaders, String fileName,Long index) throws EvpException {
-
-		try {
-
-			String username = CommonUtils.getUsername(request, jwtUtil);
-			String employeeId = CommonUtils.getEmployeeIdFromUsername(username);
-			Optional<Employee> employee = employeeRepository.findByEmployeeId(employeeId);
-			String employeeName = employee.isPresent() ? employee.get().getEmployeeName() : "";
-
-			Optional<UploadResponse> uploadOpt = uploadResponses.stream().findFirst();
-			if (uploadOpt.isPresent()) {
-				UploadResponse uploadResponse = uploadOpt.get();
-
-				Leaders leader = new Leaders();
-				leader.setLeaderName(leadersName);
-				leader.setLeaderPictureLocation(uploadResponse.getAssetUrl());
-				leader.setImageName(fileName);
-				leader.setDesignation(designation);
-				leader.setDescription(description);
-				leader.setUploadedBy(employeeName);
-				leader.setContainerLocation(uploadResponse.getFileLocation());
-				leader.setIndex(index);
-				leaders.add(leader);
-			}
-
-		} catch (Exception e) {
-			log.error(e.getMessage());
-			throw new EvpException(e.getMessage());
-		}
-
-	}
+//	private void buildLeaderData(List<UploadResponse> uploadResponses, String leadersName, String designation,
+//			String description, List<Leaders> leaders,Long index) throws EvpException {
+//
+//		try {
+//
+//			String username = CommonUtils.getUsername(request, jwtUtil);
+//			String employeeId = CommonUtils.getEmployeeIdFromUsername(username);
+//			Optional<Employee> employee = employeeRepository.findByEmployeeId(employeeId);
+//			String employeeName = employee.isPresent() ? employee.get().getEmployeeName() : "";
+//
+//			Optional<UploadResponse> uploadOpt = uploadResponses.stream().findFirst();
+//			if (uploadOpt.isPresent()) {
+//				UploadResponse uploadResponse = uploadOpt.get();
+//
+//				Leaders leader = new Leaders();
+//				leader.setLeaderName(leadersName);
+//				leader.setLeaderPictureLocation("");
+//				leader.setDesignation(designation);
+//				leader.setDescription(description);
+//				leader.setUploadedBy(employeeName);
+//				leader.setContainerLocation("");
+//				leader.setIndex(index);
+//				leaders.add(leader);
+//			}
+//
+//		} catch (Exception e) {
+//			log.error(e.getMessage());
+//			throw new EvpException(e.getMessage());
+//		}
+//
+//	}
 
 
 	@Override
@@ -2107,12 +2103,16 @@ public class UploadServiceImpl implements UploadService {
 	@Override
 	public Map<String, Object> commonGetForLandingPge() throws EvpException {
 		Map<String, Object> dataMap=new HashMap<>();
+		try {
 		dataMap.put("banner", bannerPictureRepo.findAllByOrderByIndex());
 		dataMap.put("leadersTalk", leadersRepo.findAllByOrderByIndex());
 		dataMap.put("voiceOfChange", vocRepo.findAllByOrderByIndex());
 		dataMap.put("video", videoRepo.findAllByOrderByIndex());
 		dataMap.put("testimonial", testimonialDataRepo.findAllByOrderByIndex());
-		dataMap.put("partners", partnersLogoRepo.findAllByOrderByIndex());
+		dataMap.put("partners", partnersLogoRepo.findAllByOrderByIndex());}
+		catch(Exception e) {
+			log.error(e.getMessage());
+		}
 		return dataMap;
 	}
 	@Override
