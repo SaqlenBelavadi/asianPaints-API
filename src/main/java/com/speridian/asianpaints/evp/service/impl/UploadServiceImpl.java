@@ -188,7 +188,7 @@ public class UploadServiceImpl implements UploadService {
 						try {
 							employee = employeeService.getEmployeeById(employeeId);
 						} catch (Exception e) {
-
+							log.error("Error While getting employee");
 						}
 
 						if (!Optional.ofNullable(employee).isPresent()) {

@@ -287,8 +287,12 @@ public class LoginServiceImpl implements LoginService {
 			List<String> participationHours = employeeActivityHistory.stream()
 					.map(EmployeeActivityHistory::getParticipationHours).collect(Collectors.toList());
 			participationHours.forEach(p->{
+				Integer minutes=0;
+				String[] parts = p.split(" ");
 				Integer hours=Integer.parseInt(p.split(" ")[0]);
-				Integer minutes=Integer.parseInt(p.split(" ")[2]);
+				if(parts.length > 2) {
+					minutes=Integer.parseInt(p.split(" ")[2]);
+				}
 				h.addAndGet(hours);
 				m.addAndGet(minutes);
 				if(m.get()>=60) {
