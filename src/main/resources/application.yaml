@@ -9,7 +9,7 @@ spring:
     name: AsianPaintsEVP
   profiles:
     active:
-    - prod
+    - uat
 
 jwt:
     jjwt:
